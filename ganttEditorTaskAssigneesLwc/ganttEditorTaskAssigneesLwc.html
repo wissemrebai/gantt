@@ -1,0 +1,71 @@
+<template>
+    <div class="tabContainer">
+        <div class="slds-var-m-bottom_small">
+            <c-reusable-lookup-l-w-c
+                data-id="inputLookupCell"
+                class="lookup-filter"
+                variant="label-hidden"
+                label={labels.Search}
+                placeholder={labels.Search}
+                disabled={lookupDisabled}
+                sobject-options={lookupOptions}
+                onselectitem={handleLookupChange}
+            ></c-reusable-lookup-l-w-c>
+        </div>
+
+        <template for:each={assignees} for:item="a">
+            <div
+                key={a.gm__resourceId}
+                class="slds-grid slds-var-m-bottom_small slds-box slds-box_small slds-theme_default"
+            >
+                <lightning-avatar
+                    class="slds-var-m-right_medium"
+                    src={a.src}
+                    alternative-text={a.title}
+                    initials={a.initials}
+                    size="medium"
+                ></lightning-avatar>
+
+                <div
+                    class="slds-grid_vertical slds-grid slds-grid_align-center"
+                >
+                    <div class="slds-text-heading_small slds-truncate">
+                        <strong>{a.title}</strong>
+                    </div>
+                    <div
+                        class="slds-text-body_small slds-text-color_weak slds-truncate"
+                    >
+                        {a.subtitle}
+                    </div>
+                </div>
+
+                <div
+                    lwc:if={showDeleteButton}
+                    class="slds-col_bump-left slds-grid slds-grid_vertical-align-center"
+                >
+                    <!-- sldsValidatorIgnore -->
+                    <lightning-button-icon
+                        data-id={a.gm__resourceId}
+                        icon-name="utility:delete"
+                        alternative-text={labels.Delete}
+                        variant="border-filled"
+                        onclick={handleDelete}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={assignees.length}>
+            <div
+                class="slds-text-align_center slds-text-color_weak slds-var-m-top_medium"
+            >
+                <lightning-icon
+                    class="slds-var-m-bottom_x-small"
+                    icon-name="utility:groups"
+                    size="small"
+                ></lightning-icon>
+                <p>No resources assigned yet.</p>
+            </div>
+        </template>
+    </div>
+</template>

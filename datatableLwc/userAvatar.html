@@ -1,0 +1,13 @@
+<template>
+    <template if:true={value}>
+        <c-avatar-group
+            items={value}
+            max-visible={typeAttributes.maxVisible}
+            variant={typeAttributes.variant}
+            size={typeAttributes.size}
+            overlap={typeAttributes.overlap}
+            aria-label={typeAttributes.ariaLabel}
+        >
+        </c-avatar-group>
+    </template>
+</template>

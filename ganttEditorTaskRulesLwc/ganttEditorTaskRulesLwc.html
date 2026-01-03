@@ -1,0 +1,98 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="slds-var-p-around_x-small">
+        <div class="slds-var-m-bottom_small slds-text-align_center">
+            <lightning-radio-group
+                name="modeGroup"
+                label="..."
+                variant="label-hidden"
+                options={options}
+                value={activeTab}
+                type="button"
+                onchange={handleRadioChange}
+            ></lightning-radio-group>
+        </div>
+
+        <div
+            class="slds-box slds-box_xx-small slds-var-m-bottom_small slds-theme_default"
+        >
+            <div class="slds-grid slds-gutters_xx-small">
+                <div class="slds-col slds-size_5-of-12">
+                    <template lwc:if={showTypeDropdown}>
+                        <lightning-combobox
+                            name="type"
+                            label={labels.Type}
+                            options={typeOptions}
+                            variant="label-stacked"
+                            dropdown-alignment="auto"
+                            disabled={isTypeDropdownDisabled}
+                            onchange={handleInputChange}
+                        ></lightning-combobox>
+                    </template>
+
+                    <template lwc:else>
+                        <lightning-input
+                            class="gantt-date"
+                            type="date"
+                            name="date"
+                            label={labels.StartDate}
+                            disabled={isTypeDropdownDisabled}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </template>
+                </div>
+
+                <div class="slds-col slds-size_5-of-12">
+                    <template lwc:if={isSegment}>
+                        <lightning-input
+                            class="gantt-date"
+                            type="date"
+                            name="endDate"
+                            label={labels.EndDate}
+                            value={inputEndDate}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </template>
+
+                    <template lwc:else>
+                        <lightning-input
+                            class="gantt-date"
+                            type="date"
+                            name="date"
+                            label={labels.Date}
+                            value={inputDate}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </template>
+                </div>
+
+                <div
+                    class="slds-col slds-size_2-of-12 slds-text-align_right slds-var-p-top_x-large"
+                >
+                    <lightning-button-icon
+                        class="slds-var-m-bottom_xx-small"
+                        icon-name="utility:add"
+                        variant="brand"
+                        title={labels.AddRule}
+                        alternative-text={labels.AddRule}
+                        disabled={isApplyDisabled}
+                        onclick={applyRule}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-var-m-bottom_small" style="height: 200px">
+            <lightning-datatable
+                key-field="gm__ruleUID"
+                columns={columns}
+                data={filteredRules}
+                draft-values={draftValues}
+                hide-checkbox-column
+                show-row-number-column
+                onrowaction={handleRowAction}
+                onsave={handleSave}
+            ></lightning-datatable>
+        </div>
+    </div>
+</template>

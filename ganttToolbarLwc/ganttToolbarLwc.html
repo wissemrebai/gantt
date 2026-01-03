@@ -1,0 +1,297 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="card__header slds-grid slds-border_bottom slds-m-bottom_none">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container">
+                    <lightning-icon
+                        icon-name={options.iconName}
+                        alternative-text="Gantt Chart"
+                        size="large"
+                    ></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h1>
+                    <span
+                        class="slds-page-header__title slds-truncate"
+                        title="Gantt Chart"
+                    >
+                        {options.title}
+                    </span>
+                    <div class="gantt-subtitle">
+                        {tasksLength} {labels.Items}
+                        <strong
+                            class="slds-var-m-bottom_medium"
+                            lwc:if={isSyncNeeded}
+                        >
+                            {syncNeededLabel}
+                            <lightning-button-icon
+                                icon-name="utility:sync"
+                                variant="brand"
+                                size="x-small"
+                                class="slds-m-left_xx-small"
+                                onclick={handleSync}
+                            ></lightning-button-icon>
+                        </strong>
+                    </div>
+                </h1>
+            </div>
+            <div>
+                <div class="actions-wrapper slds-grid slds-gutters_x-small">
+                    <div class="slds-col">
+                        <lightning-button-stateful
+                            data-id="criticalPath"
+                            label-when-off={labels.CriticalPath}
+                            label-when-on={labels.CriticalPath}
+                            label-when-hover={labels.CriticalPath}
+                            icon-name-when-on="utility:check"
+                            icon-name-when-off="utility:close"
+                            icon-name-when-hover="utility:close"
+                            selected={tShowCriticalPath}
+                            disabled={disabled}
+                            variant={selectedPathVariant}
+                            onclick={toggleCriticalPath}
+                        >
+                        </lightning-button-stateful>
+                    </div>
+
+                    <div class="slds-col slds-grid">
+                        <lightning-combobox
+                            data-id="baseline-selector"
+                            name="baseline"
+                            class="baseline-combobox slds-m-right_x-small"
+                            value={selectedBaselineId}
+                            variant="label-hidden"
+                            placeholder="Select baseline..."
+                            options={baselineOptions}
+                            disabled={disabled}
+                            onchange={handleBaselineChange}
+                        ></lightning-combobox>
+                        <lightning-button-icon
+                            data-id="baseline-save"
+                            icon-name="utility:add"
+                            tooltip="Add Baseline"
+                            variant="brand"
+                            disabled={disabled}
+                            onclick={handleAddBaseline}
+                        ></lightning-button-icon>
+                    </div>
+
+                    <div class="slds-col">
+                        <lightning-button-group>
+                            <lightning-button-icon-stateful
+                                data-id="hScroll"
+                                icon-name="utility:signpost"
+                                tooltip={labels.EnableHorizontalScroll}
+                                selected={tEnableHScroll}
+                                disabled={disabled}
+                                onclick={toggleAutoHScroll}
+                            ></lightning-button-icon-stateful>
+
+                            <lightning-button-icon-stateful
+                                data-id="toggleLeft"
+                                icon-name="utility:toggle_panel_left"
+                                tooltip={labels.ToggleLeftPanel}
+                                selected={leftPanelOpen}
+                                disabled={disabled}
+                                onclick={toggleLeftPanel}
+                            ></lightning-button-icon-stateful>
+
+                            <lightning-button-icon-stateful
+                                data-id="toggleRight"
+                                icon-name="utility:toggle_panel_right"
+                                tooltip={labels.ToggleRightPanel}
+                                selected={rightPanelOpen}
+                                disabled={disabled}
+                                onclick={toggleRightPanel}
+                            ></lightning-button-icon-stateful>
+
+                            <lightning-button-icon
+                                data-id="expandAll"
+                                icon-name="utility:expand_all"
+                                tooltip={labels.ExpandAll}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleExpandAll}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                data-id="collapseAll"
+                                icon-name="utility:collapse_all"
+                                tooltip={labels.CollapseAll}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleCollapseAll}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                data-id="fullScreen"
+                                icon-name={fullscreenIcon}
+                                tooltip={labels.ToggleFullscreen}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={toggleFullscreen}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                data-id="refresh"
+                                icon-name="utility:refresh"
+                                tooltip={labels.Refresh}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleRefresh}
+                            >
+                            </lightning-button-icon>
+                        </lightning-button-group>
+                    </div>
+
+                    <div class="slds-col" lwc:if={showActions}>
+                        <lightning-button-group>
+                            <lightning-button-icon
+                                lwc:if={canReorder}
+                                data-id="up"
+                                icon-name="utility:arrowup"
+                                tooltip={labels.MoveUp}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleReorder}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                lwc:if={canReorder}
+                                data-id="down"
+                                icon-name="utility:arrowdown"
+                                tooltip={labels.MoveDown}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleReorder}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                lwc:if={canReorder}
+                                data-id="right"
+                                icon-name="utility:jump_to_right"
+                                variant="border-filled"
+                                tooltip={labels.MoveRight}
+                                disabled={disabled}
+                                onclick={handleReorder}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                lwc:if={canReorder}
+                                data-id="left"
+                                icon-name="utility:jump_to_left"
+                                variant="border-filled"
+                                tooltip={labels.MoveLeft}
+                                disabled={disabled}
+                                onclick={handleReorder}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                lwc:if={canDelete}
+                                data-id="delete"
+                                icon-name="utility:delete"
+                                tooltip={labels.Delete}
+                                variant="border-filled"
+                                disabled={disabled}
+                                onclick={handleDeleteSelected}
+                            ></lightning-button-icon>
+                        </lightning-button-group>
+                    </div>
+
+                    <div class="slds-col">
+                        <lightning-button-group>
+                            <lightning-button
+                                data-id="save"
+                                variant="brand"
+                                label={saveLabel}
+                                disabled={disableSave}
+                                onclick={handleSaveHistory}
+                            ></lightning-button>
+
+                            <lightning-button-icon
+                                data-id="undo"
+                                icon-name="utility:undo"
+                                tooltip={labels.Undo}
+                                variant="border-filled"
+                                disabled={disableUndo}
+                                onclick={handleUndoHistory}
+                            ></lightning-button-icon>
+
+                            <lightning-button-icon
+                                data-id="redo"
+                                icon-name="utility:redo"
+                                tooltip={labels.Redo}
+                                variant="border-filled"
+                                disabled={disableRedo}
+                                onclick={handleRedoHistory}
+                            ></lightning-button-icon>
+                        </lightning-button-group>
+                    </div>
+
+                    <div class="slds-col">
+                        <lightning-input
+                            data-id="datepicker"
+                            class="gantt-selected-date"
+                            type="date"
+                            date-style="short"
+                            variant="label-hidden"
+                            value={tRefDate}
+                            min={tMinDate}
+                            max={tMaxDate}
+                            disabled={disabled}
+                            onchange={handleChangeDate}
+                        ></lightning-input>
+                    </div>
+
+                    <div class="slds-col" lwc:if={isZoomAvailable}>
+                        <lightning-button-group>
+                            <lightning-button-icon
+                                data-id="zoomout"
+                                icon-name="utility:zoomout"
+                                tooltip={labels.ZoomOut}
+                                variant="border-filled"
+                                disabled={zoomOutDisabled}
+                                onclick={handleZoom}
+                            ></lightning-button-icon>
+                            <lightning-button-icon
+                                data-id="zoomin"
+                                icon-name="utility:zoomin"
+                                tooltip={labels.ZoomIn}
+                                variant="border-filled"
+                                disabled={zoomInDisabled}
+                                onclick={handleZoom}
+                            ></lightning-button-icon>
+                        </lightning-button-group>
+                    </div>
+
+                    <div class="slds-col" lwc:if={isZoomAvailable}>
+                        <lightning-combobox
+                            name="zoomLevel"
+                            value={zoomLevel}
+                            variant="label-hidden"
+                            placeholder="Zoom"
+                            options={zoomLevelOptions}
+                            disabled={disabled}
+                            onchange={handleChangeLevel}
+                        ></lightning-combobox>
+                    </div>
+
+                    <div class="slds-col">
+                        <lightning-combobox
+                            name="viewType"
+                            value={getSelectedView}
+                            variant="label-hidden"
+                            placeholder="Select view..."
+                            options={viewOptions}
+                            disabled={disabled}
+                            dropdown-alignment="auto"
+                            onchange={handleViewChange}
+                        ></lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+</template>

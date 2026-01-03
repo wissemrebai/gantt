@@ -1,0 +1,39 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#f8f9fa" rx="4"/>
+  
+  <!-- Vertical grid lines (time divisions) -->
+  <line x1="25" y1="15" x2="25" y2="85" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="40" y1="15" x2="40" y2="85" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="55" y1="15" x2="55" y2="85" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="70" y1="15" x2="70" y2="85" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="85" y1="15" x2="85" y2="85" stroke="#e9ecef" stroke-width="1"/>
+  
+  <!-- Horizontal grid lines -->
+  <line x1="15" y1="30" x2="90" y2="30" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="15" y1="45" x2="90" y2="45" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="15" y1="60" x2="90" y2="60" stroke="#e9ecef" stroke-width="1"/>
+  <line x1="15" y1="75" x2="90" y2="75" stroke="#e9ecef" stroke-width="1"/>
+  
+  <!-- Y-axis (task list area) -->
+  <line x1="15" y1="15" x2="15" y2="85" stroke="#495057" stroke-width="2"/>
+  
+  <!-- X-axis (timeline) -->
+  <line x1="15" y1="85" x2="90" y2="85" stroke="#495057" stroke-width="2"/>
+  
+  <!-- Gantt bars (tasks) -->
+  <!-- Task 1: Long bar -->
+  <rect x="25" y="20" width="35" height="8" fill="#007bff" rx="2"/>
+  
+  <!-- Task 2: Medium bar -->
+  <rect x="30" y="35" width="25" height="8" fill="#28a745" rx="2"/>
+  
+  <!-- Task 3: Short bar -->
+  <rect x="45" y="50" width="15" height="8" fill="#ffc107" rx="2"/>
+  
+  <!-- Task 4: Long bar with different timing -->
+  <rect x="35" y="65" width="40" height="8" fill="#dc3545" rx="2"/>
+  
+  <!-- Task dependency connector (optional detail) -->
+  <path d="M60 24 L62 24 L62 32 L64 32 L60 36 L56 32 L58 32 L58 24 Z" fill="#6c757d" opacity="0.6"/>
+</svg>

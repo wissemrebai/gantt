@@ -1,0 +1,45 @@
+<template>
+    <div>
+        <template if:true={hasPredecessors}>
+            <div class="slds-var-p-around_small slds-border_bottom">
+                <div
+                    class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-var-m-bottom_small"
+                >
+                    <h3 class="slds-text-heading_small">
+                        <b>{labels.Predecessors}</b>
+                    </h3>
+                </div>
+
+                <template for:each={predecessorTasks} for:item="p">
+                    <c-gantt-element-dependency-lwc
+                        key={p.dependency.Id}
+                        element={p}
+                        is-predecessor
+                        oneditoraction={handleEditorAction}
+                    ></c-gantt-element-dependency-lwc>
+                </template>
+            </div>
+        </template>
+
+        <template if:true={hasSuccessors}>
+            <div class="slds-var-p-around_small">
+                <div
+                    class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-var-m-bottom_small"
+                >
+                    <h3 class="slds-text-heading_small">
+                        <b>{labels.Successors}</b>
+                    </h3>
+                </div>
+
+                <template for:each={successorTasks} for:item="s">
+                    <c-gantt-element-dependency-lwc
+                        key={s.dependency.Id}
+                        element={s}
+                        is-successor
+                        oneditoraction={handleEditorAction}
+                    ></c-gantt-element-dependency-lwc>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

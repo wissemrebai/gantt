@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <masterLabel>GM - Gantt Chart</masterLabel>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <!-- Identification -->
+            <property name="parentRecordId" type="String" label="Gantt Id" />
+            <property name="title" type="String" default="Gantt Chart" label="Title" />
+            <property name="iconName" type="String" default="standard:chart" label="Icon name" />
+
+            <!-- Behavior -->
+            <property name="canSelect" type="Boolean" default="false" label="Enable multi-select" />
+            <property name="canReorder" type="Boolean" default="false" label="Enable tree reorder" />
+            <property name="canEdit" type="Boolean" default="false" label="Enable editing" />
+            <property name="canDelete" type="Boolean" default="false" label="Enable deletion" />
+
+            <!-- Data & Config -->
+            <property name="taskProps" type="String" label="Gantt configuration JSON" />
+            <property name="columns" type="String" default="day,week" label="Hidden Views" />
+
+            <!-- Timeline -->
+            <property
+                name="defaultView"
+                type="String"
+                default="Month"
+                label="Default view"
+                datasource="Day,Week,Month,Year,Full"
+            />
+            <property
+                name="defaultZoomLevel"
+                type="String"
+                label="Zoom Level"
+                default="100"
+                datasource="25,50,100,200"
+            />
+            <property name="displayedTasks" type="Integer" default="10" label="Visible tasks" />
+            <property name="rowHeight" type="Integer" default="40" label="Row height (px)" />
+            <property name="slotSize" type="Integer" default="100" label="Slot size (px)" />
+
+            <!-- Work Hours -->
+            <property name="showWorkHours" type="Boolean" default="false" label="Show only work hours" />
+            <property name="workDayStart" type="Integer" default="8" label="Work day start" min="1" max="24" />
+            <property name="workDayEnd" type="Integer" default="17" label="Work day end" min="1" max="24" />
+            <property name="hourSpan" type="Integer" default="1" label="Hour span" max="12" />
+            <property name="workWeekStart" type="Integer" default="1" label="Work week start" />
+            <property name="workWeekEnd" type="Integer" default="5" label="Work week end" />
+            <property name="firstDayOfWeek" type="Integer" default="1" label="First day of week" />
+
+            <!-- Panel Layout -->
+            <property name="listPanelOpen" type="Boolean" default="false" label="List panel open by default" />
+            <property name="editorPanelOpen" type="Boolean" default="false" label="Editor panel open by default" />
+            <property
+                name="listPanelWidth"
+                type="Integer"
+                default="50"
+                max="100"
+                label="Default list panel width (%)"
+            />
+            <property
+                name="editorPanelWidth"
+                type="Integer"
+                default="30"
+                max="100"
+                label="Default editor panel width (%)"
+            />
+
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
+
+        <targetConfig targets="lightningCommunity__Default">
+            <!-- Identification -->
+            <property name="parentRecordId" type="String" label="Gantt id" />
+            <property name="title" type="String" default="Gantt Chart" label="Title" />
+            <property name="iconName" type="String" default="standard:chart" label="Icon name" />
+
+            <!-- Timeline -->
+            <property
+                name="defaultView"
+                type="String"
+                default="Month"
+                label="Default view"
+                datasource="Day,Week,Month,Year,Full"
+            />
+            <property
+                name="defaultZoomLevel"
+                type="String"
+                label="Zoom Level"
+                default="100"
+                datasource="25,50,100,200"
+            />
+            <property name="displayedTasks" type="Integer" default="10" label="Max displayed tasks" />
+            <property name="rowHeight" type="Integer" default="40" label="Row height (px)" />
+            <property name="slotSize" type="Integer" default="100" label="Slot size (px)" />
+
+            <!-- Behavior -->
+            <property name="canSelect" type="Boolean" default="false" label="Enable multi-select" />
+            <property name="canReorder" type="Boolean" default="false" label="Enable reorder" />
+            <property name="canEdit" type="Boolean" default="false" label="Enable editing" />
+            <property name="canDelete" type="Boolean" default="false" label="Enable deletion" />
+
+            <!-- Data -->
+            <property name="taskProps" type="String" label="Gantt configuration JSON" />
+            <property name="columns" type="String" default="day,week" label="Hidden Views" />
+
+            <!-- Work Hours -->
+            <property name="showWorkHours" type="Boolean" default="false" label="Show only work hours" />
+            <property name="workDayStart" type="Integer" default="8" label="Work day start" min="1" max="24" />
+            <property name="workDayEnd" type="Integer" default="17" label="Work day end" min="1" max="24" />
+            <property name="hourSpan" type="Integer" default="1" label="Hour span" max="12" />
+            <property name="workWeekStart" type="Integer" default="1" label="Work week start" />
+            <property name="workWeekEnd" type="Integer" default="5" label="Work week end" />
+            <property name="firstDayOfWeek" type="Integer" default="1" label="First day of week" />
+
+            <!-- Panel Layout -->
+            <property name="listPanelOpen" type="Boolean" default="false" label="List panel open by default" />
+            <property name="editorPanelOpen" type="Boolean" default="false" label="Editor panel open by default" />
+            <property
+                name="listPanelWidth"
+                type="Integer"
+                default="50"
+                max="100"
+                label="Default list panel width (%)"
+            />
+            <property
+                name="editorPanelWidth"
+                type="Integer"
+                default="30"
+                max="100"
+                label="Default editor panel width (%)"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,28 @@
+/* @sldsValidatorIgnore */
+:host {
+    --gm-row-height: 30px;
+}
+
+.treelist {
+    height: 100%;
+}
+
+.tree-list-container {
+    flex: 1 1 auto;
+    max-height: var(--gm-tree-max-height, 'none');
+    height: var(--gm-tree-height, 'none');
+    min-height: var(--gm-tree-min-height, 'none');
+}
+
+.header-wrap {
+    background-color: #00396a12;
+    border-bottom: 1px solid gainsboro;
+}
+
+.header-height {
+    height: var(--gm-header-height, '40px');
+}
+
+.search-input {
+    max-width: 400px;
+}

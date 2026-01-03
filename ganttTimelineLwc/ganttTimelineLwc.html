@@ -1,0 +1,168 @@
+<template>
+    <div
+        lwc:ref="main"
+        class="slds-is-relative"
+        onregistertask={handleRegistration}
+    >
+        <!-- Gantt Timeline -->
+        <div
+            lwc:ref="timeline"
+            class="slds-is-relative slds-scrollable_x"
+            onfocus={handleFocus}
+        >
+            <div class="container" lwc:ref="container">
+                <!-- Gantt Header -->
+                <div class="timeline-header">
+                    <!-- Header1 Labels (virtualized) -->
+                    <div class="header-row header1-labels">
+                        <template
+                            lwc:if={renderedHeader1Labels}
+                            for:each={renderedHeader1Labels}
+                            for:item="header1"
+                        >
+                            <div
+                                key={header1.index}
+                                class="header-cell"
+                                style={header1.style}
+                            >
+                                <span>{header1.label}</span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Header2 Labels (virtualized) -->
+                    <div class="header-row header2-labels">
+                        <template
+                            lwc:if={renderedHeader2Labels}
+                            for:each={renderedHeader2Labels}
+                            for:item="header2"
+                        >
+                            <div
+                                key={header2.index}
+                                class="header-cell"
+                                style={header2.style}
+                            >
+                                <span>{header2.label}</span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Cell Labels / Time Slots (virtualized) -->
+                    <div class="header-row cell-labels">
+                        <template
+                            lwc:if={renderedTimeSlots}
+                            for:each={renderedTimeSlots}
+                            for:item="slot"
+                        >
+                            <div
+                                key={slot.id}
+                                class={slot.cellClass}
+                                style={slot.style}
+                            >
+                                <div>{slot.label}</div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div lwc:ref="taskDate" class="task-date"></div>
+                </div>
+
+                <!-- Gantt Grid Content -->
+                <div
+                    lwc:ref="gridContent"
+                    class="grid-content slds-scrollable_y"
+                >
+                    <div
+                        class="gantt-tables slds-is-relative slds-scrollable_none"
+                    >
+                        <!-- Gantt rows -->
+                        <table class="table header-table gantt-rows">
+                            <colgroup>
+                                <col />
+                            </colgroup>
+                            <tbody class="table-tbody">
+                                <template
+                                    lwc:if={renderedRows}
+                                    for:each={renderedRows}
+                                    for:item="row"
+                                >
+                                    <tr
+                                        key={row.key}
+                                        class={row.className}
+                                        style={row.style}
+                                    >
+                                        <td class="table-td">&nbsp;</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
+                        <!-- Gantt columns (with horizontal virtual scrolling) -->
+                        <div class="gantt-columns gantt-columns-virtual">
+                            <template
+                                lwc:if={renderedColumns}
+                                for:each={renderedColumns}
+                                for:item="column"
+                            >
+                                <div
+                                    key={column.index}
+                                    class={column.className}
+                                    style={column.style}
+                                ></div>
+                            </template>
+                        </div>
+
+                        <!-- Gantt tasks -->
+                        <div class="table gantt-tasks">
+                            <template
+                                lwc:if={taskTree}
+                                for:each={taskTree}
+                                for:item="task"
+                            >
+                                <c-gantt-task-lwc
+                                    key={task.gm__elementUID}
+                                    class="gantt-task"
+                                    task-manager={taskManager}
+                                    task-id={task.gm__elementUID}
+                                    items={task.gm__children}
+                                    options={options}
+                                    slot-size={slotSize}
+                                    ontaskaction={handleTaskAction}
+                                ></c-gantt-task-lwc>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Gantt line -->
+                    <div
+                        class="gantt-line gantt-line-h gantt-dependency-hint"
+                        style="position: absolute; pointer-events: none"
+                    ></div>
+
+                    <!-- Gantt dependencies -->
+                    <div class="gantt-dependencies">
+                        <template
+                            lwc:if={tDependencies}
+                            for:each={tDependencies}
+                            for:item="dependency"
+                        >
+                            <c-gantt-dependency-lwc
+                                key={dependency.gm__dependencyUID}
+                                data-id={dependency.gm__dependencyUID}
+                                options={options}
+                                dependency={dependency}
+                            >
+                            </c-gantt-dependency-lwc>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Gantt cursors -->
+                <div class="cursor cursor-today"></div>
+
+                <!-- Gantt Ruler -->
+                <div lwc:ref="taskRuler" class="task-ruler"></div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,20 @@
+<template>
+    <div class={dependencyClass}>
+        <template for:each={tDependencyElements} for:item="dependencyline">
+            <div
+                tabindex="0"
+                key={dependencyline.key}
+                data-id={dependencyline.id}
+                lwc:spread={dependencyline.attrs}
+                onclick={handleClick}
+                onmouseover={handleHover}
+                onmouseleave={handleLeave}
+                onkeyup={handleKeyUp}
+            >
+                <template lwc:if={dependencyline.arrow}>
+                    <span lwc:spread={dependencyline.arrow.attrs}></span>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

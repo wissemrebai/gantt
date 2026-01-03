@@ -1,0 +1,107 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="tabContainer">
+        <div class="slds-text-align_center slds-var-m-bottom_medium">
+            <lightning-button-group>
+                <!-- task -->
+                <lightning-button
+                    data-id="task"
+                    icon-name="utility:stop"
+                    label={labels.GanttTypeTask}
+                    aria-label={labels.GanttTypeTask}
+                    variant={taskVariant}
+                    disabled={isTaskDisabled}
+                    onclick={updateRequestType}
+                ></lightning-button>
+
+                <!-- milestone -->
+                <lightning-button
+                    data-id="milestone"
+                    icon-name="utility:diamond"
+                    label={labels.GanttTypeMilestone}
+                    aria-label={labels.GanttTypeTask}
+                    variant={milestoneVariant}
+                    disabled={isMilestoneDisabled}
+                    onclick={updateRequestType}
+                ></lightning-button>
+
+                <!-- summary -->
+                <lightning-button
+                    data-id="summary"
+                    icon-name="utility:label"
+                    label={labels.GanttTypeSummary}
+                    aria-label={labels.GanttTypeTask}
+                    variant={summaryVariant}
+                    disabled={isSummaryDisabled}
+                    onclick={updateRequestType}
+                ></lightning-button>
+            </lightning-button-group>
+        </div>
+        <div class="slds-grid slds-wrap" lwc:if={element}>
+            <!-- EDIT MODE -->
+            <template lwc:if={editMode}>
+                <template for:each={fields} for:item="field">
+                    <div class="slds-col slds-size_1-of-1" key={field.name}>
+                        <c-record-input-field-l-w-c
+                            data-id="inputField"
+                            field={field}
+                            record={element}
+                            disabled={field.disabled}
+                            density="comfy"
+                            onvaluechanged={handleInputFieldChange}
+                        ></c-record-input-field-l-w-c>
+                    </div>
+                </template>
+
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-button-group>
+                        <lightning-button
+                            label={labels.Cancel}
+                            onclick={handleCancel}
+                        ></lightning-button>
+                        <lightning-button
+                            variant="brand"
+                            label={labels.Save}
+                            onclick={handleSubmit}
+                        ></lightning-button>
+                    </lightning-button-group>
+                </div>
+            </template>
+
+            <!-- READ-ONLY MODE -->
+            <template lwc:else>
+                <template for:each={fields} for:item="field">
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-grid slds-align_absolute-center"
+                        key={field.name}
+                    >
+                        <div
+                            class="slds-col slds-size_11-of-12 slds-var-p-bottom_small"
+                        >
+                            <c-record-output-field-l-w-c
+                                data-id="outputField"
+                                field={field}
+                                record={element}
+                                density="comfy"
+                            ></c-record-output-field-l-w-c>
+                        </div>
+
+                        <!-- EDIT BUTTON -->
+                        <template lwc:if={canEdit}>
+                            <template lwc:if={field.updateable}>
+                                <lightning-button-icon
+                                    disabled={field.disabled}
+                                    class="slds-col slds-size_1-of-12"
+                                    alternative-text={labels.Edit}
+                                    icon-name="utility:edit"
+                                    variant="bare"
+                                    onclick={handleEdit}
+                                ></lightning-button-icon>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

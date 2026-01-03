@@ -1,0 +1,80 @@
+<template>
+    <div class="slds-var-p-around_small slds-var-m-bottom_small slds-box slds-theme_default">
+        <div
+            class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start slds-var-m-bottom_x-small"
+        >
+            <div class="slds-truncate slds-var-p-right_small">
+                <div
+                    class="slds-text-heading_small slds-truncate"
+                    title={dependentTaskName}
+                >
+                    <b>{dependentTaskName}</b>
+                </div>
+            </div>
+
+            <lightning-button-icon
+                icon-name="utility:delete"
+                variant="border-filled"
+                class="slds-text-color_weak hover-danger"
+                size="medium"
+                title="..."
+                onclick={handleDelete}
+            >
+            </lightning-button-icon>
+        </div>
+
+        <div class="slds-form">
+            <div class="slds-form-element slds-var-m-bottom_small">
+                <lightning-combobox
+                    name="dependencyType"
+                    label={labels.Type}
+                    placeholder={labels.SelectType}
+                    options={typeOptions}
+                    value={tType}
+                    onchange={handleChange}
+                ></lightning-combobox>
+            </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">{labels.Delay}</label>
+
+                <div class="slds-form-element__control">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox
+                                name="delayType"
+                                variant="label-hidden"
+                                options={delayOptions}
+                                value={tDelay}
+                                onchange={handleChange}
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-input
+                                type="number"
+                                name="delaySpan"
+                                placeholder="0"
+                                variant="label-hidden"
+                                value={tSpan}
+                                disabled={isDelayImmediate}
+                                onblur={handleChange}
+                            ></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox
+                                name="spanType"
+                                variant="label-hidden"
+                                options={spanTypeOptions}
+                                value={tSpanType}
+                                disabled={isDelayImmediate}
+                                onchange={handleChange}
+                            ></lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

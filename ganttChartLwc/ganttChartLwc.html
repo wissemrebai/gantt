@@ -1,0 +1,140 @@
+<template>
+    <c-formula-engine-a-p-i lwc:ref="ruleEngine"> </c-formula-engine-a-p-i>
+
+    <div class={containerClass}>
+        <div class="card slds-is-relative">
+            <!-- Include the toolbar at the top -->
+            <c-gantt-toolbar-lwc
+                lwc:ref="toolbar"
+                options={options}
+                selected-view={selectedView}
+                task-manager={taskManager}
+                ontoolbaraction={handleToolbarAction}
+            >
+            </c-gantt-toolbar-lwc>
+
+            <!-- Gantt content -->
+            <div
+                lwc:if={showTimeline}
+                class="slds-card__body gantt-content slds-m-top_none"
+            >
+                <div class="gantt-split-view">
+                    <c-split-view-l-w-c
+                        lwc:ref="splitEditor"
+                        default-width={options.editorWidth}
+                        default-with-split={options.defaultRightPanelOpen}
+                        direction="right"
+                        ontoggle={handleSplitViewEditorToggle}
+                    >
+                        <c-split-view-l-w-c
+                            lwc:ref="splitTree"
+                            slot="leftSide"
+                            default-width={options.listWidth}
+                            default-with-split={options.defaultLeftPanelOpen}
+                            direction="left"
+                            ontoggle={handleSplitViewTreeToggle}
+                        >
+                            <!-- Include the tree list on the left side -->
+                            <c-gantt-tree-list-lwc
+                                lwc:ref="tree"
+                                slot="leftSide"
+                                task-manager={taskManager}
+                                scroll-position={scrollPosition}
+                                options={options}
+                                fullscreen={fullscreen}
+                                expanded-rows={expandedRows}
+                                highlighted-rows={highlightedRows}
+                                selected-rows={selectedRows}
+                                ontreescroll={handleTreeScroll}
+                                onrowaction={handleTreeRowAction}
+                            >
+                            </c-gantt-tree-list-lwc>
+
+                            <!-- Include the timeline on the right side -->
+                            <c-gantt-timeline-lwc
+                                lwc:ref="timeline"
+                                slot="rightSide"
+                                task-manager={taskManager}
+                                scroll-position={scrollPosition}
+                                options={options}
+                                fullscreen={fullscreen}
+                                selected-view={selectedView}
+                                expanded-rows={expandedRows}
+                                highlighted-rows={highlightedRows}
+                                dependencies={dependencies}
+                                selected-rows={selectedRows}
+                                ontimelinescroll={handleTimelineScroll}
+                                onrowaction={handleTimelineRowAction}
+                                ontoggleloading={toggleLoading}
+                                onshowpopover={handleShowPopover}
+                                onupdatepopover={handleUpdatePopover}
+                                onhidepopover={handleHidePopover}
+                            >
+                            </c-gantt-timeline-lwc>
+                        </c-split-view-l-w-c>
+
+                        <div
+                            slot="rightSide"
+                            class="slds-is-relative split-editor"
+                            style="height: 100%"
+                        >
+                            <c-gantt-element-editor-lwc
+                                options={options}
+                                fullscreen={fullscreen}
+                                task-manager={taskManager}
+                                selected-element={selectedElement}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-element-editor-lwc>
+                        </div>
+                    </c-split-view-l-w-c>
+                </div>
+            </div>
+
+            <div lwc:if={showNewGantt} class="slds-grid gantt-new">
+                <button
+                    class="slds-align_absolute-center slds-button slds-button_brand"
+                    type="button"
+                    style="padding: 5px 25px"
+                    onclick={createGantt}
+                >
+                    New Gantt Chart
+                </button>
+            </div>
+
+            <div lwc:if={showMissingSetting} class="slds-grid gantt-new">
+                <div
+                    class="slds-align_absolute-center slds-context-bar__app-name"
+                >
+                    Invalid Record
+                </div>
+            </div>
+        </div>
+
+        <lightning-spinner
+            if:true={loading}
+            size="small"
+            variant="brand"
+            alternative-text="..."
+        ></lightning-spinner>
+
+        <!-- Single Popover for all tasks -->
+        <c-record-popover-l-w-c
+            lwc:ref="recordPopover"
+            if:true={popoverData.show}
+            title={popoverData.title}
+            record={popoverData.record}
+            can-delete={popoverData.canDelete}
+            columns="2"
+            popover-fields={popoverData.popoverFields}
+            icon-name={popoverData.iconName}
+            target-top={popoverData.top}
+            target-left={popoverData.left}
+            target-width="1"
+            target-height={popoverData.height}
+            onpopoverenter={handlePopoverEnter}
+            onpopoverleave={handlePopoverLeave}
+            onpopoverclose={handlePopoverClose}
+            ondeleterecord={handlePopoverDelete}
+        ></c-record-popover-l-w-c>
+    </div>
+</template>

@@ -1,0 +1,36 @@
+<template>
+    <div class="table-wrapper hideFirstColTable" style={spacerHeights}>
+        <c-datatable-lwc
+            style="height: 100%; display: block"
+            lwc:ref="datatable"
+            aria-label="treelist"
+            columns={normalizedColumns}
+            column-widths-mode={columnWidthsMode}
+            hide-checkbox-column={hideCheckboxColumn}
+            highlighted-rows={highlightedRows}
+            draft-values={draftValues}
+            key-field={keyField}
+            orderable={orderable}
+            max-column-width={maxColumnWidth}
+            max-row-selection={maxRowSelection}
+            min-column-width={minColumnWidth}
+            records={normalizedRecords}
+            selected-rows={selectedRows}
+            wrap-text-max-lines={wrapTextMaxLines}
+            data-element-id="treelist-datatable"
+            apply-method={applyMethod}
+            sorted-by={sortedBy}
+            sorted-direction={sortDirection}
+            onsort={handleSort}
+            enable-infinite-loading={isInfiniteLoadingDisabled}
+            oncellchange={handleCellChangeAction}
+            onrowselection={handleRowSelection}
+            onheaderaction={handleHeaderAction}
+            onrowaction={handleRowAction}
+            onreorderstart={handleReorderStart}
+            onreordermove={handleReorderMove}
+            onreorderend={handleReorderEnd}
+        >
+        </c-datatable-lwc>
+    </div>
+</template>

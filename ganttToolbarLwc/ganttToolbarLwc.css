@@ -1,0 +1,58 @@
+/* @sldsValidatorIgnore */
+:host {
+    --gm-header-background: #fafafa;
+}
+
+/*to move into Gantt Chart Component*/
+.card__header {
+    padding-block-start: var(
+        --slds-c-card-header-spacing-blockstart,
+        var(
+            --slds-c-card-header-spacing-block,
+            var(--_slds-g-spacing-var-block-3, var(--slds-g-spacing-3))
+        )
+    );
+    padding-inline-end: var(
+        --slds-c-card-header-spacing-inlineend,
+        var(
+            --slds-c-card-header-spacing-inline,
+            var(--_slds-g-spacing-var-inline-4, var(--slds-g-spacing-4))
+        )
+    );
+    padding-block-end: var(
+        --slds-c-card-header-spacing-blockend,
+        var(--slds-c-card-header-spacing-block, 0)
+    );
+    padding-inline-start: var(
+        --slds-c-card-header-spacing-inlinestart,
+        var(
+            --slds-c-card-header-spacing-inline,
+            var(--_slds-g-spacing-var-inline-4, var(--slds-g-spacing-4))
+        )
+    );
+    margin-block-end: var(
+        --slds-c-card-header-spacing-blockend,
+        var(--_slds-g-spacing-var-block-3, var(--slds-g-spacing-3))
+    );
+    margin: 0px;
+}
+
+.gantt-toolbar {
+    border: 0;
+    border-radius: 0;
+    background-color: var(--gm-header-background);
+    border-bottom: 1px solid rgb(232 232 232);
+}
+
+.gantt-selected-date {
+    width: 120px;
+    --slds-s-helptext-font-size: 0px;
+}
+
+.baseline-combobox {
+    width: 120px;
+}
+
+.gantt-subtitle {
+    height:20px;
+}

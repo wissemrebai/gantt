@@ -1,0 +1,160 @@
+<template>
+    <div class="main-wrapper">
+        <div class="slds-p-around_medium">
+            <lightning-button
+                label="Add Item"
+                icon-name="utility:add"
+                onclick={handleAddButtonClick}
+                variant="neutral"
+                stretch
+            >
+            </lightning-button>
+        </div>
+
+        <div class="active-list-container">
+            <ul class="slds-timeline">
+                <template for:each={activeItems} for:item="item">
+                    <li key={item.id} class="checklist-item">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={item.completed}
+                                    data-id={item.id}
+                                    onchange={handleToggleComplete}
+                                    variant="label-hidden"
+                                ></lightning-input>
+                            </div>
+                            <div class="slds-media__body">
+                                <div
+                                    class="slds-grid slds-grid_vertical-align-start"
+                                >
+                                    <div class="slds-col slds-grow">
+                                        <textarea
+                                            class="title-editable"
+                                            data-id={item.id}
+                                            onfocus={handleFocus}
+                                            oninput={handleTitleInput}
+                                            onkeydown={handleTitleKeyDown}
+                                            onblur={handleBlur}
+                                            placeholder={labels.Title}
+                                            rows="1"
+                                        >
+{item.text}</textarea
+                                        >
+
+                                        <textarea
+                                            class="description-editable"
+                                            data-id={item.id}
+                                            onfocus={handleFocus}
+                                            oninput={handleDescriptionInput}
+                                            onblur={handleBlur}
+                                            placeholder={labels.Details}
+                                        >
+{item.description}</textarea
+                                        >
+                                    </div>
+                                    <div class="slds-col slds-no-flex">
+                                        <div class="action-buttons">
+                                            <lightning-button-icon
+                                                icon-name="utility:delete"
+                                                variant="bare"
+                                                size="medium"
+                                                data-id={item.id}
+                                                onclick={handleDeleteItem}
+                                            ></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <template lwc:if={hasCompletedItems}>
+            <div class="completed-area">
+                <lightning-accordion allow-multiple-sections-open>
+                    <lightning-accordion-section
+                        name="completed"
+                        label={completedLabel}
+                    >
+                        <ul class="slds-timeline">
+                            <template for:each={completedItems} for:item="item">
+                                <li
+                                    key={item.id}
+                                    class="checklist-item item-completed"
+                                >
+                                    <div class="slds-media">
+                                        <div class="slds-media__figure">
+                                            <lightning-input
+                                                type="checkbox"
+                                                checked={item.completed}
+                                                data-id={item.id}
+                                                onchange={handleToggleComplete}
+                                                variant="label-hidden"
+                                            ></lightning-input>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div
+                                                class="slds-grid slds-grid_vertical-align-start"
+                                            >
+                                                <div class="slds-col slds-grow">
+                                                    <textarea
+                                                        class="title-editable"
+                                                        data-id={item.id}
+                                                        onfocus={handleFocus}
+                                                        oninput={hand}
+                                                        onkeydown={handleTitleKeyDown}
+                                                        onblur={handleBlur}
+                                                        placeholder={labels.Title}
+                                                        rows="1"
+                                                    >
+{item.text}</textarea
+                                                    >
+
+                                                    <textarea
+                                                        class="description-editable"
+                                                        data-id={item.id}
+                                                        onfocus={handleFocus}
+                                                        oninput={handleDescriptionInput}
+                                                        onblur={handleBlur}
+                                                        placeholder={labels.Details}
+                                                    >
+{item.description}</textarea
+                                                    >
+
+                                                    <template
+                                                        lwc:if={item.completedDate}
+                                                    >
+                                                        <span
+                                                            class="completion-date"
+                                                        >
+                                                            Completed:
+                                                            {item.completedDate}
+                                                        </span>
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-no-flex"
+                                                >
+                                                    <lightning-button-icon
+                                                        icon-name="utility:delete"
+                                                        variant="bare"
+                                                        data-id={item.id}
+                                                        onclick={handleDeleteItem}
+                                                    ></lightning-button-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </div>
+        </template>
+    </div>
+</template>

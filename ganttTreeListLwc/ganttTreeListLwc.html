@@ -1,0 +1,51 @@
+<template>
+    <div lwc:ref="mainContainer" class="slds-is-relative treelist">
+        <div class="slds-grid slds-grid_vertical" style="height: 100%">
+            <!-- header treelist -->
+            <div class="header-wrap">
+                <div
+                    class="slds-grid slds-grid_vertical-align-center slds-var-p-around_x-small header-height"
+                >
+                    <lightning-input
+                        class="slds-container_fluid search-input"
+                        type="search"
+                        variant="label-hidden"
+                        placeholder={labels.Search}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                </div>
+            </div>
+
+            <!-- treelist -->
+            <div
+                lwc:ref="treeListContainer"
+                class="tree-list-container hide-first-col-table"
+            >
+                <c-tree-grid-lwc
+                    lwc:ref="treelist"
+                    displayed-tasks={displayedTasks}
+                    row-height={rowHeight}
+                    columns={gridColumns}
+                    key-field={keyField}
+                    records={taskTree}
+                    enable-virtual-scroll
+                    viewport-height={viewportHeight}
+                    selected-rows={selectedRows}
+                    expanded-rows={expandedRows}
+                    highlighted-rows={highlightedRows}
+                    orderable={options.canReorder}
+                    onscroll={handleScroll}
+                    ontoggle={handleToggle}
+                    draft-values={draftValues}
+                    oncellchange={handleCellChange}
+                    onrowselection={handleRowSelection}
+                    onrowaction={handleRowAction}
+                    onreorderstart={handleReorderStart}
+                    onreordermove={handleReorderMove}
+                    onreorderend={handleReorderEnd}
+                >
+                </c-tree-grid-lwc>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,162 @@
+/* TreeGridLwc Styles */
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+/* Summary row styling */
+.summary-row {
+    background-color: #fafaf9;
+    font-weight: 600;
+}
+
+.summary-row:hover {
+    background-color: #f3f2f2 !important;
+}
+
+/* treeGridLwcVirtual.css */
+
+.tree-grid-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Virtual scroll container - applies padding for scrollbar positioning */
+.tree-grid-container > div {
+    transition: padding 0.1s ease-out;
+}
+
+/* Debug info panel */
+.virtual-scroll-debug {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 11px;
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.debug-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.debug-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.debug-label {
+    color: #00d4ff;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.debug-value {
+    color: #00ff88;
+}
+
+/* Performance optimization - force GPU acceleration */
+lightning-datatable {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Smooth scrolling */
+.tree-grid-container {
+    scroll-behavior: smooth;
+}
+
+/* Loading state */
+.tree-grid-container.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Custom scrollbar styling (optional) */
+.tree-grid-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.tree-grid-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.tree-grid-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
+.tree-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Highlighted rows */
+.slds-is-highlighted {
+    animation: highlight-pulse 0.3s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(0, 112, 210, 0.1);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Tree cell indentation styling */
+.slds-tree__item {
+    padding-left: calc(1rem * var(--level, 1));
+}
+
+/* Performance metrics badge (optional) */
+.performance-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .virtual-scroll-debug {
+        font-size: 9px;
+        padding: 8px;
+        min-width: 150px;
+    }
+    
+    .debug-label,
+    .debug-value {
+        font-size: 9px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .virtual-scroll-debug,
+    .performance-badge {
+        display: none;
+    }
+}

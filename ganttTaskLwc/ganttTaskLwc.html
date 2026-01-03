@@ -1,0 +1,186 @@
+<template>
+    <div class="container">
+        <div if:false={hasValidData}>
+            <div
+                lwc:ref="invalidRow"
+                class="task-row task-row-invalid slds-is-relative"
+            ></div>
+        </div>
+        <div class="wrapper" if:true={hasValidData}>
+            <div
+                lwc:ref="row"
+                class="task-row slds-is-relative"
+                onmousedown={handleTaskMouseDown}
+            >
+                <!-- Deadlines with Brackets -->
+                <div
+                    class="zone-target-start"
+                    title="Target Start Zone"
+                    lwc:if={hasTargetStart}
+                >
+                    <div class="zone-bracket zone-bracket-start">
+                        <div class="bracket-line bracket-top"></div>
+                        <div class="bracket-line bracket-bottom"></div>
+                        <div class="bracket-edge"></div>
+                    </div>
+                </div>
+                <div
+                    class="zone-target-end"
+                    title="Target End Zone"
+                    lwc:if={hasTargetEnd}
+                >
+                    <div class="zone-bracket zone-bracket-end">
+                        <div class="bracket-line bracket-top"></div>
+                        <div class="bracket-line bracket-bottom"></div>
+                        <div class="bracket-edge"></div>
+                    </div>
+                </div>
+
+                <!-- Segments -->
+                <template lwc:if={taskSegments.length}>
+                    <template for:each={taskSegments} for:item="seg">
+                        <div
+                            key={seg.gm__key}
+                            class="task-segment-indicator"
+                            style={seg.style}
+                            title={seg.title}
+                        ></div>
+                    </template>
+                </template>
+
+                <!-- Baseline Indicator -->
+                <div
+                    lwc:ref="baselineIndicator"
+                    class={baselineClass}
+                    onmousemove={handleBaselineMouseMove}
+                    onmouseleave={handleBaselineMouseLeave}
+                ></div>
+
+                <!-- Baseline Tooltip -->
+                <div
+                    lwc:if={showBaselineTooltip}
+                    class="baseline-tooltip-fixed"
+                    style={baselineTooltipStyle}
+                >
+                    <div class="baseline-tooltip-content">
+                        <div class="baseline-tooltip-label">
+                            Start: {baselineStartDate}
+                        </div>
+                        <div class="baseline-tooltip-label">
+                            End: {baselineEndDate}
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    lwc:ref="taskGrouper"
+                    class="task-grouper"
+                    lwc:if={showGrouperHeight}
+                ></div>
+
+                <div lwc:ref="wrap" class={wrapClass}>
+                    <div
+                        lwc:ref="task"
+                        class={taskClass}
+                        onmousemove={handleLookupOver}
+                        onmouseleave={handleLookupLeave}
+                    >
+                        <div
+                            class="task-critical-bar"
+                            lwc:if={isCritical}
+                        ></div>
+
+                        <!-- Out-of-bounds texture overlays on task -->
+                        <div
+                            class="task-texture-overlay task-texture-start"
+                            lwc:if={isBeforeTargetStart}
+                        ></div>
+                        <div
+                            class="task-texture-overlay task-texture-end"
+                            lwc:if={isAfterTargetEnd}
+                        ></div>
+
+                        <div
+                            lwc:ref="taskComplete"
+                            class="task-complete"
+                            data-progress={effectiveProgress}
+                        ></div>
+                        <div class="task-content">
+                            <div
+                                class="task-title-outside"
+                                lwc:if={showTitleOutside}
+                            >
+                                {taskTitle}
+                            </div>
+                            <div class="task-template" lwc:else>
+                                {taskTitle}
+                            </div>
+
+                            <div
+                                lwc:if={canResizeStart}
+                                lwc:ref="resizeLeft"
+                                class="resize-handle resize-left"
+                                onmousedown={handleResizeMouseDown}
+                            ></div>
+                            <div
+                                lwc:if={canResizeEnd}
+                                lwc:ref="resizeRight"
+                                class="resize-handle resize-right"
+                                onmousedown={handleResizeMouseDown}
+                            ></div>
+                            <div
+                                lwc:if={canProgressDrag}
+                                lwc:ref="progressDrag"
+                                class={progressDragClass}
+                                onmousedown={handleProgressMouseDown}
+                            ></div>
+                            <span
+                                lwc:if={canProgressDrag}
+                                class="progress-text"
+                                style={progressTextVisibility}
+                            >
+                                {effectiveProgress}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div
+                        lwc:if={canAddDependency}
+                        lwc:ref="taskDotStart"
+                        class={startDotClass}
+                        style="left: 0"
+                        onmousedown={handleTaskDotMouseDown}
+                        onmouseup={handleTaskDotMouseUp}
+                        onmouseenter={handleTaskDotMouseEnter}
+                        onmouseleave={handleTaskDotMouseLeave}
+                    ></div>
+                    <div
+                        lwc:if={canAddDependency}
+                        lwc:ref="taskDotEnd"
+                        class={endDotClass}
+                        style="right: 0"
+                        onmousedown={handleTaskDotMouseDown}
+                        onmouseup={handleTaskDotMouseUp}
+                        onmouseenter={handleTaskDotMouseEnter}
+                        onmouseleave={handleTaskDotMouseLeave}
+                    ></div>
+                </div>
+                <div lwc:ref="slide"></div>
+            </div>
+
+            <div class={childrenClass}>
+                <template for:each={items} for:item="task">
+                    <c-gantt-task-lwc
+                        key={task.gm__elementUID}
+                        class="gantt-task"
+                        task-manager={taskManager}
+                        task-id={task.gm__elementUID}
+                        items={task.gm__children}
+                        options={options}
+                        slot-size={slotSize}
+                    ></c-gantt-task-lwc>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

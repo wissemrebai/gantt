@@ -1,0 +1,72 @@
+/* Gantt line styles */
+.gantt-line {
+    background-color: #ff6358;
+    border-color: #ff6358;
+    position: absolute;
+    z-index: 7;
+}
+
+.gantt-line:focus-visible {
+    outline: 0;
+}
+
+.gantt-line-h {
+    height: 3px;
+}
+
+.gantt-line-v {
+    width: 3px;
+}
+
+/* Selected line */
+.selected .gantt-line {
+    background-color: var(--slds-g-color-success-base-70);
+    border-color: var(--slds-g-color-success-base-70);
+    z-index: 8;
+}
+
+.selected .gantt-line .arrow-right,
+.selected .gantt-line .arrow-left {
+    color: var(--slds-g-color-success-base-70);
+}
+
+.new .gantt-line {
+    border-color: #5e9e3e;
+    background-color: #5e9e3e;
+    z-index: 8;
+}
+
+.new .gantt-line .arrow-right,
+.new .gantt-line .arrow-left {
+    color: #5e9e3e;
+}
+
+/* Hovered line */
+.hovered .gantt-line,
+.hovered .gantt-line .arrow-right,
+.hovered .gantt-line .arrow-left {
+    box-shadow: inset 0 0 0 21px #9f020270;
+    color: #9f0202ba;
+    z-index: 8;
+}
+
+/* Arrows */
+.arrow-right,
+.arrow-left {
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    position: absolute;
+    top: -4px;
+    color: #ff6358;
+}
+
+.arrow-right {
+    border-left-color: currentColor;
+    right: -7px;
+}
+
+.arrow-left {
+    border-right-color: currentColor;
+    left: -8px;
+}

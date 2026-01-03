@@ -1,0 +1,22 @@
+:host {
+    --slds-c-card-shadow: none;
+    --slds-c-card-sizing-border: 0;
+    --slds-c-card-header-spacing-inline: 1rem;
+}
+
+.editor-container {
+    overflow: auto;
+    background: #f8f8f8;
+}
+
+.task-details lightning-tab {
+    height: var(--gm-grid-content-height);
+    min-height: var(--gm-grid-content-min-height);
+    overflow-y: auto;
+    padding: 10px;
+    background: #f8f8f8;
+}
+
+.empty-state {
+    background: #f8f8f8;
+}  

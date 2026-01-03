@@ -1,0 +1,96 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-modal-header label={modalHeaderLabel}> </lightning-modal-header>
+
+    <lightning-modal-body>
+        <div class="slds-theme_default">
+            <div class="content-wrapper">
+                <c-data-grid-errors-displayer-l-w-c
+                    errors={errors}
+                ></c-data-grid-errors-displayer-l-w-c>
+
+                <template lwc:if={isReady}>
+                    <template lwc:if={objectApiName}>
+                        <c-dynamic-record-edit-form-lwc
+                            object-api-name={objectApiName}
+                            values={defaultValues}
+                            onformsubmit={handleSubmit}
+                            onformsuccess={handleSuccess}
+                            onformerror={handleError}
+                        ></c-dynamic-record-edit-form-lwc>
+                    </template>
+
+                    <div lwc:else class="slds-align_absolute-center">
+                        <template for:each={tObjectConfigs} for:item="object">
+                            <div
+                                key={object.name}
+                                class="slds-visual-picker slds-visual-picker_small"
+                                data-object={object.name}
+                                onclick={handleSelect}
+                            >
+                                <span
+                                    class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center"
+                                >
+                                    <span class="slds-is-not-selected">
+                                        <span class="slds-icon_container">
+                                            <lightning-icon
+                                                icon-name={object.icon}
+                                                class="slds-m-right_x-small"
+                                            >
+                                            </lightning-icon>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span class="slds-visual-picker__body">
+                                    <span class="slds-text-title">
+                                        {object.label}
+                                    </span>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <div class="slds-modal__footer actions-wrapper">
+                <template lwc:if={objectApiName}>
+                    <button
+                        class="slds-button slds-button--neutral"
+                        onclick={handlePrevious}
+                    >
+                        {labels.Previous}
+                    </button>
+                    <div>
+                        <button
+                            class="slds-button slds-button--neutral"
+                            onclick={handleCancel}
+                        >
+                            {labels.Cancel}
+                        </button>
+                        <button
+                            class="slds-button slds-button--brand"
+                            onclick={handleSave}
+                        >
+                            {labels.Save}
+                        </button>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <button
+                        class="slds-button slds-button--neutral"
+                        onclick={handleCancel}
+                    >
+                        {labels.Cancel}
+                    </button>
+                </template>
+            </div>
+
+            <template if:true={isWorking}>
+                <lightning-spinner
+                    variant="brand"
+                    alternative-text="..."
+                ></lightning-spinner>
+            </template>
+        </div>
+    </lightning-modal-body>
+</template>

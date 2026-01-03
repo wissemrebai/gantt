@@ -1,0 +1,42 @@
+<template>
+    <lightning-modal-header label={title}></lightning-modal-header>
+
+    <lightning-modal-body>
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <lightning-input
+                lwc:ref="startDate"
+                class="slds-col slds-size_6-of-12"
+                label={labels.StartDate}
+                disabled
+                type={startDateFormat}
+                value={startDate}
+            >
+            </lightning-input>
+
+            <lightning-input
+                lwc:ref="endDate"
+                class="slds-col slds-size_6-of-12 slds-var-m-left_small"
+                label={labels.EndDate}
+                type={endDateFormat}
+                value={endDate}
+            >
+            </lightning-input>
+        </div>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <lightning-button
+            variant="neutral"
+            label={labels.Cancel}
+            onclick={handleCancel}
+        >
+        </lightning-button>
+        <lightning-button
+            variant="brand"
+            class="slds-var-m-left_small"
+            label={labels.Submit}
+            onclick={handleSubmit}
+        >
+        </lightning-button>
+    </lightning-modal-footer>
+</template>

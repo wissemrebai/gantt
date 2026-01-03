@@ -1,0 +1,82 @@
+/* @sldsValidatorIgnore */
+:host {
+    --gm-left-side-width: 0;
+    --gm-left-side-visibility: visible;
+    --gm-right-side-width: 0;
+    --gm-right-side-visibility: visible;
+}
+
+.resizer {
+    display: flex;
+}
+
+.resizer .resize-button {
+    cursor: ew-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 0.75rem;
+    padding: 0.2rem;
+    border-radius: 0;
+    margin-left: 0px;
+    --slds-c-icon-color-foreground-default: #0070d2;
+    pointer-events: auto; /* Ensure button is clickable */
+}
+
+.resizer .resize-button.left {
+    border-left: 0px;
+}
+
+.resizer .split-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 0.75rem;
+    padding: 0.2rem;
+    border-radius: 0;
+    margin-left: 0px;
+    --slds-c-icon-color-foreground-default: #0070d2;
+    pointer-events: auto; /* Ensure button is clickable */
+}
+
+.resizer .split-button.right {
+    border-left: 0px;
+}
+
+.left-side {
+    /* Use flex-basis instead of width */
+    flex: 0 0 var(--gm-left-side-width);
+    max-width: var(--gm-left-side-width);
+    min-width: 0;
+    visibility: var(--gm-left-side-visibility);
+    
+    /* Performance hints */
+    contain: layout style paint;
+}
+
+.right-side {
+    /*  Use flex-basis instead of width */
+    flex: 0 0 var(--gm-right-side-width);
+    max-width: var(--gm-right-side-width);
+    min-width: 0; /* Allow shrinking */
+    visibility: var(--gm-right-side-visibility);
+    
+    /* Performance hints */
+    contain: layout style paint;
+}
+
+.left-side,
+.right-side {
+    transition: var(--gm-transition);
+}
+
+.left-side[style*='visibility: hidden'],
+.right-side[style*='visibility: hidden'] {
+    flex: 0 0 0 !important; /* Use flex instead of width */
+    max-width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden;
+}

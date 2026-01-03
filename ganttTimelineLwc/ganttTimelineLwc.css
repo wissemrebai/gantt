@@ -1,0 +1,761 @@
+.container {
+    width: var(--gm-container-width);
+
+    /* used when change sizes/views */
+    -webkit-transition: width 0.1s ease-in-out;
+    -moz-transition: width 0.1s ease-in-out;
+    -o-transition: width 0.1s ease-in-out;
+    transition: width 0.1s ease-in-out;
+}
+
+.timeline-header {
+    position: relative;
+    background: white;
+    z-index: 10;
+}
+
+.grid-content {
+    width: 100%;
+    min-height: 0;
+    position: relative;
+    flex: 1;
+    height: var(--gm-grid-content-height);
+    min-height: var(--gm-grid-content-min-height);
+}
+
+/* generic table */
+
+.table-row {
+    border-block-start: var(--slds-g-sizing-border-1) solid
+        var(--slds-g-color-border-1);
+}
+
+.table-row.row-even {
+    background-color: #0000000a;
+}
+
+.table.header-table {
+    table-layout: fixed;
+}
+
+.header-table .step-labels td {
+    padding-block: 0;
+}
+
+.header-table td {
+    border-width: 0;
+    padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+    -webkit-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    -moz-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+}
+
+.header1-labels {
+    height: 37px;
+    font-weight: 700;
+}
+
+.header2-labels {
+    height: 30px;
+    font-weight: 700;
+}
+
+/* ========================================
+   VIRTUALIZED HEADER STYLES
+   ======================================== */
+
+/* Header row container for virtualized headers */
+.header-row {
+    position: relative;
+    width: var(--gm-container-width);
+    overflow: hidden;
+}
+.header-row:nth-child(odd) {
+    background: #f5f5f5;
+}
+
+/* Virtualized header cells */
+.header-row .header-cell {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+    -webkit-box-shadow: inset -1px -1px 0px 0px #dcd9d9;
+    -moz-box-shadow: inset -1px -1px 0px 0px #dcd9d9;
+    box-shadow: inset -1px -1px 0px 0px #dcd9d9;
+}
+
+/* Virtualized cell-labels (time slots) */
+.header-row.cell-labels .cell-title,
+.header-row.cell-labels > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    -webkit-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    -moz-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+}
+
+/* ========================================
+   END VIRTUALIZED HEADER STYLES
+   ======================================== */
+
+.row-height {
+    height: var(--row-height, 40px);
+}
+
+.cell-labels {
+    height: 34px;
+}
+
+.cell-title {
+    font-size: 10px;
+    height: inherit;
+}
+
+.cell-today {
+    background: var(--sds-g-color-brand-base-80);
+}
+
+.cell-today div {
+    color: black;
+    font-weight: 800;
+}
+
+.table-th,
+.table-td {
+    border-width: 0 0 0px 1px;
+    border-style: solid;
+    border-color: inherit;
+    box-sizing: border-box;
+    font-weight: 400;
+    text-align: inherit;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: table-cell;
+    position: relative;
+}
+
+.table-th:first-child,
+.table-td:first-child {
+    border-left-width: 0;
+}
+
+.header-sticky {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 10;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.table-th {
+    border-bottom-width: 1px;
+}
+
+/* gantt table */
+.gantt-tables {
+    min-height: var(--gm-grid-content-height);
+}
+
+.gantt-rows,
+.gantt-columns,
+.gantt-columns-days {
+    border-color: inherit;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
+.gantt-columns,
+.gantt-columns-days {
+    height: 100%;
+}
+
+/* ========================================
+   VIRTUAL SCROLLING COLUMNS STYLES
+   ======================================== */
+
+/* Container for virtualized columns */
+.gantt-columns-virtual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--gm-container-width);
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Virtualized column cells - using divs instead of table cells */
+.gantt-columns-virtual .table-td {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: block;
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: inherit;
+    -webkit-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    -moz-box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+    box-shadow: inset -1px 0px 0px 0px #dcd9d9;
+}
+
+/* First virtualized column should not have left border */
+.gantt-columns-virtual .table-td:first-child {
+    border-left-width: 0;
+}
+
+/* Non-working column styling for virtualized columns */
+.gantt-columns-virtual .nonworking-column::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 112, 210, 0.1),
+        rgba(0, 112, 210, 0.1) 10px,
+        transparent 10px,
+        transparent 17px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ========================================
+   END VIRTUAL SCROLLING COLUMNS STYLES
+   ======================================== */
+
+/* gantt dependencies */
+.gantt-line {
+    background-color: currentColor;
+    border-color: currentColor;
+    position: absolute;
+    z-index: 7;
+}
+
+.gantt-line-h {
+    height: 3px;
+}
+
+.gantt-dependency-hint {
+    z-index: 4;
+}
+
+.gantt-dependencies {
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.gantt-dependency-hint {
+    z-index: 4;
+}
+
+/* gantt today cursor*/
+.cursor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.cursor.cursor-today {
+    background: #d70000;
+    left: calc(var(--gm-today-cursor-position, 0px));
+    height: 100%;
+    width: 3px;
+}
+
+.cursor.cursor-start {
+    background: #2600ff99;
+}
+.cursor.cursor-end {
+    background: #2600ff99;
+}
+
+.highlighted-row {
+    box-shadow: inset 0 0 0 32px var(--slds-g-color-brand-base-95, #f4f6f9);
+    transition: 'background 0.1s ease';
+}
+
+.selected-row {
+    box-shadow: inset 0 0 0 32px
+        var(--slds-s-table-row-color-background-selected);
+}
+
+/* task ruler */
+.task-ruler {
+    position: absolute;
+    border-right: 2px solid var(--slds-g-color-brand-base-50);
+    border-left: 2px solid var(--slds-g-color-brand-base-50);
+    background: rgb(from var(--slds-g-color-brand-base-50) r g b / 30%);
+    bottom: 0;
+    top: 0;
+    z-index: 1;
+    display: none;
+    will-change: transform;
+}
+
+.task-date {
+    position: absolute;
+    box-shadow: 2px 4px 3px 0px #a1a1a1;
+    background: var(--slds-g-color-brand-base-50);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 6px;
+    border-radius: 3px;
+    display: none;
+    z-index: 3;
+    will-change: transform;
+}
+
+.last-column {
+    box-shadow:
+        inset 3px 0px 0px 0px #7f7c7c,
+        inset -1px 0px 0px 0px #dcd9d9 !important;
+}
+
+.nonworking-column::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 112, 210, 0.1),
+        rgba(0, 112, 210, 0.1) 10px,
+        transparent 10px,
+        transparent 17px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.morning-class {
+    background: var(--sds-g-color-palette-neutral-80);
+}
+
+c-gantt-task-lwc {
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+/* Base class for all tick cells */
+.tick-cell {
+    background-image:
+        linear-gradient(
+            to right,
+            var(--slds-g-color-brand-base-50) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to right,
+            var(--slds-g-color-error-base-30) 1px,
+            transparent 1px
+        );
+    background-repeat: repeat-x, repeat-x;
+    background-position:
+        left bottom,
+        left bottom;
+    background-size:
+        var(--big-tick-size, 0) 20%,
+        var(--small-tick-size, 0) 10%;
+}
+
+/* Ticks per cell */
+.ticks-2 {
+    --big-tick-size: calc(100% / 2);
+}
+.ticks-3 {
+    --big-tick-size: calc(100% / 3);
+}
+.ticks-4 {
+    --big-tick-size: calc(100% / 4);
+}
+.ticks-5 {
+    --big-tick-size: calc(100% / 5);
+}
+.ticks-6 {
+    --big-tick-size: calc(100% / 6);
+}
+.ticks-7 {
+    --big-tick-size: calc(100% / 7);
+}
+.ticks-8 {
+    --big-tick-size: calc(100% / 8);
+}
+.ticks-9 {
+    --big-tick-size: calc(100% / 9);
+}
+.ticks-10 {
+    --big-tick-size: calc(100% / 10);
+}
+.ticks-11 {
+    --big-tick-size: calc(100% / 11);
+}
+.ticks-12 {
+    --big-tick-size: calc(100% / 12);
+}
+.ticks-13 {
+    --big-tick-size: calc(100% / 13);
+}
+.ticks-14 {
+    --big-tick-size: calc(100% / 14);
+}
+.ticks-15 {
+    --big-tick-size: calc(100% / 15);
+}
+.ticks-16 {
+    --big-tick-size: calc(100% / 16);
+}
+.ticks-17 {
+    --big-tick-size: calc(100% / 17);
+}
+.ticks-18 {
+    --big-tick-size: calc(100% / 18);
+}
+.ticks-19 {
+    --big-tick-size: calc(100% / 19);
+}
+.ticks-20 {
+    --big-tick-size: calc(100% / 20);
+}
+.ticks-21 {
+    --big-tick-size: calc(100% / 21);
+}
+.ticks-22 {
+    --big-tick-size: calc(100% / 22);
+}
+.ticks-23 {
+    --big-tick-size: calc(100% / 23);
+}
+.ticks-24 {
+    --big-tick-size: calc(100% / 24);
+}
+.ticks-25 {
+    --big-tick-size: calc(100% / 25);
+}
+.ticks-26 {
+    --big-tick-size: calc(100% / 26);
+}
+.ticks-27 {
+    --big-tick-size: calc(100% / 27);
+}
+.ticks-28 {
+    --big-tick-size: calc(100% / 28);
+}
+.ticks-29 {
+    --big-tick-size: calc(100% / 29);
+}
+.ticks-30 {
+    --big-tick-size: calc(100% / 30);
+}
+.ticks-31 {
+    --big-tick-size: calc(100% / 31);
+}
+
+.ticks-small-2 {
+    --small-tick-size: calc(100% / 2);
+}
+.ticks-small-3 {
+    --small-tick-size: calc(100% / 3);
+}
+.ticks-small-4 {
+    --small-tick-size: calc(100% / 4);
+}
+.ticks-small-5 {
+    --small-tick-size: calc(100% / 5);
+}
+.ticks-small-6 {
+    --small-tick-size: calc(100% / 6);
+}
+.ticks-small-7 {
+    --small-tick-size: calc(100% / 7);
+}
+.ticks-small-8 {
+    --small-tick-size: calc(100% / 8);
+}
+.ticks-small-9 {
+    --small-tick-size: calc(100% / 9);
+}
+.ticks-small-10 {
+    --small-tick-size: calc(100% / 10);
+}
+.ticks-small-11 {
+    --small-tick-size: calc(100% / 11);
+}
+.ticks-small-12 {
+    --small-tick-size: calc(100% / 12);
+}
+.ticks-small-13 {
+    --small-tick-size: calc(100% / 13);
+}
+.ticks-small-14 {
+    --small-tick-size: calc(100% / 14);
+}
+.ticks-small-15 {
+    --small-tick-size: calc(100% / 15);
+}
+.ticks-small-16 {
+    --small-tick-size: calc(100% / 16);
+}
+.ticks-small-17 {
+    --small-tick-size: calc(100% / 17);
+}
+.ticks-small-18 {
+    --small-tick-size: calc(100% / 18);
+}
+.ticks-small-19 {
+    --small-tick-size: calc(100% / 19);
+}
+.ticks-small-20 {
+    --small-tick-size: calc(100% / 20);
+}
+.ticks-small-21 {
+    --small-tick-size: calc(100% / 21);
+}
+.ticks-small-22 {
+    --small-tick-size: calc(100% / 22);
+}
+.ticks-small-23 {
+    --small-tick-size: calc(100% / 23);
+}
+.ticks-small-24 {
+    --small-tick-size: calc(100% / 24);
+}
+.ticks-small-25 {
+    --small-tick-size: calc(100% / 25);
+}
+.ticks-small-26 {
+    --small-tick-size: calc(100% / 26);
+}
+.ticks-small-27 {
+    --small-tick-size: calc(100% / 27);
+}
+.ticks-small-28 {
+    --small-tick-size: calc(100% / 28);
+}
+.ticks-small-29 {
+    --small-tick-size: calc(100% / 29);
+}
+.ticks-small-30 {
+    --small-tick-size: calc(100% / 30);
+}
+.ticks-small-31 {
+    --small-tick-size: calc(100% / 31);
+}
+.ticks-small-32 {
+    --small-tick-size: calc(100% / 32);
+}
+.ticks-small-33 {
+    --small-tick-size: calc(100% / 33);
+}
+.ticks-small-34 {
+    --small-tick-size: calc(100% / 34);
+}
+.ticks-small-35 {
+    --small-tick-size: calc(100% / 35);
+}
+.ticks-small-36 {
+    --small-tick-size: calc(100% / 36);
+}
+.ticks-small-37 {
+    --small-tick-size: calc(100% / 37);
+}
+.ticks-small-38 {
+    --small-tick-size: calc(100% / 38);
+}
+.ticks-small-39 {
+    --small-tick-size: calc(100% / 39);
+}
+.ticks-small-40 {
+    --small-tick-size: calc(100% / 40);
+}
+.ticks-small-41 {
+    --small-tick-size: calc(100% / 41);
+}
+.ticks-small-42 {
+    --small-tick-size: calc(100% / 42);
+}
+.ticks-small-43 {
+    --small-tick-size: calc(100% / 43);
+}
+.ticks-small-44 {
+    --small-tick-size: calc(100% / 44);
+}
+.ticks-small-45 {
+    --small-tick-size: calc(100% / 45);
+}
+.ticks-small-46 {
+    --small-tick-size: calc(100% / 46);
+}
+.ticks-small-47 {
+    --small-tick-size: calc(100% / 47);
+}
+.ticks-small-48 {
+    --small-tick-size: calc(100% / 48);
+}
+.ticks-small-49 {
+    --small-tick-size: calc(100% / 49);
+}
+.ticks-small-50 {
+    --small-tick-size: calc(100% / 50);
+}
+.ticks-small-51 {
+    --small-tick-size: calc(100% / 51);
+}
+.ticks-small-52 {
+    --small-tick-size: calc(100% / 52);
+}
+.ticks-small-53 {
+    --small-tick-size: calc(100% / 53);
+}
+.ticks-small-54 {
+    --small-tick-size: calc(100% / 54);
+}
+.ticks-small-55 {
+    --small-tick-size: calc(100% / 55);
+}
+.ticks-small-56 {
+    --small-tick-size: calc(100% / 56);
+}
+.ticks-small-57 {
+    --small-tick-size: calc(100% / 57);
+}
+.ticks-small-58 {
+    --small-tick-size: calc(100% / 58);
+}
+.ticks-small-59 {
+    --small-tick-size: calc(100% / 59);
+}
+.ticks-small-60 {
+    --small-tick-size: calc(100% / 60);
+}
+.ticks-small-61 {
+    --small-tick-size: calc(100% / 61);
+}
+.ticks-small-62 {
+    --small-tick-size: calc(100% / 62);
+}
+.ticks-small-63 {
+    --small-tick-size: calc(100% / 63);
+}
+.ticks-small-64 {
+    --small-tick-size: calc(100% / 64);
+}
+.ticks-small-65 {
+    --small-tick-size: calc(100% / 65);
+}
+.ticks-small-66 {
+    --small-tick-size: calc(100% / 66);
+}
+.ticks-small-67 {
+    --small-tick-size: calc(100% / 67);
+}
+.ticks-small-68 {
+    --small-tick-size: calc(100% / 68);
+}
+.ticks-small-69 {
+    --small-tick-size: calc(100% / 69);
+}
+.ticks-small-70 {
+    --small-tick-size: calc(100% / 70);
+}
+.ticks-small-71 {
+    --small-tick-size: calc(100% / 71);
+}
+.ticks-small-72 {
+    --small-tick-size: calc(100% / 72);
+}
+.ticks-small-73 {
+    --small-tick-size: calc(100% / 73);
+}
+.ticks-small-74 {
+    --small-tick-size: calc(100% / 74);
+}
+.ticks-small-75 {
+    --small-tick-size: calc(100% / 75);
+}
+.ticks-small-76 {
+    --small-tick-size: calc(100% / 76);
+}
+.ticks-small-77 {
+    --small-tick-size: calc(100% / 77);
+}
+.ticks-small-78 {
+    --small-tick-size: calc(100% / 78);
+}
+.ticks-small-79 {
+    --small-tick-size: calc(100% / 79);
+}
+.ticks-small-80 {
+    --small-tick-size: calc(100% / 80);
+}
+.ticks-small-81 {
+    --small-tick-size: calc(100% / 81);
+}
+.ticks-small-82 {
+    --small-tick-size: calc(100% / 82);
+}
+.ticks-small-83 {
+    --small-tick-size: calc(100% / 83);
+}
+.ticks-small-84 {
+    --small-tick-size: calc(100% / 84);
+}
+.ticks-small-85 {
+    --small-tick-size: calc(100% / 85);
+}
+.ticks-small-86 {
+    --small-tick-size: calc(100% / 86);
+}
+.ticks-small-87 {
+    --small-tick-size: calc(100% / 87);
+}
+.ticks-small-88 {
+    --small-tick-size: calc(100% / 88);
+}
+.ticks-small-89 {
+    --small-tick-size: calc(100% / 89);
+}
+.ticks-small-90 {
+    --small-tick-size: calc(100% / 90);
+}
+.ticks-small-91 {
+    --small-tick-size: calc(100% / 91);
+}
+.ticks-small-92 {
+    --small-tick-size: calc(100% / 92);
+}
+.ticks-small-93 {
+    --small-tick-size: calc(100% / 93);
+}
+.ticks-small-94 {
+    --small-tick-size: calc(100% / 94);
+}
+.ticks-small-95 {
+    --small-tick-size: calc(100% / 95);
+}
+.ticks-small-96 {
+    --small-tick-size: calc(100% / 96);
+}

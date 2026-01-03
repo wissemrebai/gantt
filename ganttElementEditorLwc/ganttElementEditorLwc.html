@@ -1,0 +1,114 @@
+<template>
+    <div class="editor-container" lwc:ref="editorContainer">
+        <div class="editor-content" lwc:ref="editorContent">
+            <lightning-card variant="narrow" icon-name={iconName}>
+                <template lwc:if={recordPageUrl}>
+                    <h2 slot="title">
+                        <a
+                            class="slds-truncate"
+                            href={recordPageUrl}
+                            target="_blank"
+                        >
+                            {title}
+                        </a>
+                    </h2>
+                </template>
+                <template lwc:else>
+                    <h2 slot="title">{title}</h2>
+                </template>
+
+                <div slot="actions" lwc:if={showDelete}>
+                    <!-- sldsValidatorIgnore -->
+                    <lightning-button-icon
+                        data-id="delete"
+                        class="slds-var-m-left_small"
+                        icon-name="utility:delete"
+                        alternative-text={labels.Delete}
+                        label={labels.Delete}
+                        onclick={handleDelete}
+                    ></lightning-button-icon>
+                </div>
+
+                <!-- Task element -->
+                <template lwc:if={isTask}>
+                    <lightning-tabset class="task-details">
+                        <lightning-tab label={labels.Details}>
+                            <c-gantt-editor-task-details-lwc
+                                task-manager={taskManager}
+                                element={taskElement}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-editor-task-details-lwc>
+                        </lightning-tab>
+
+                        <lightning-tab label={checkListLabel}>
+                            <c-gantt-editor-task-checklist-lwc
+                                element={taskElement}
+                                onkeydown={handleKeydown}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-editor-task-checklist-lwc>
+                        </lightning-tab>
+
+                        <lightning-tab
+                            lwc:if={showAssignees}
+                            label={assigneesLabel}
+                        >
+                            <c-gantt-editor-task-assignees-lwc
+                                element={taskElement}
+                                options={options}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-editor-task-assignees-lwc>
+                        </lightning-tab>
+
+                        <lightning-tab
+                            lwc:if={showDependencies}
+                            label={dependenciesLabel}
+                        >
+                            <c-gantt-editor-task-dependencies-lwc
+                                element={taskElement}
+                                task-manager={taskManager}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-editor-task-dependencies-lwc>
+                        </lightning-tab>
+
+                        <lightning-tab label={rulesLabel}>
+                            <c-gantt-editor-task-rules-lwc
+                                element={taskElement}
+                                oneditoraction={handleEditorAction}
+                            ></c-gantt-editor-task-rules-lwc>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </template>
+
+                <!-- Dependency element -->
+                <template lwc:elseif={isDependency}>
+                    <c-gantt-editor-dependency-lwc
+                        element={dependencyElement}
+                        oneditoraction={handleEditorAction}
+                    ></c-gantt-editor-dependency-lwc>
+                </template>
+
+                <!-- Empty state -->
+                <template lwc:else>
+                    <div
+                        class="slds-grid_vertical empty-state slds-illustration"
+                    >
+                        <span class="uiImage">
+                            <img
+                                src="/_slds/images/illustrations/empty-states/desertSmall.svg"
+                                alt={labels.NoRecordSelectedTitle}
+                            />
+                        </span>
+                        <div class="slds-text-longform">
+                            <h3 class="slds-text-heading_medium">
+                                {labels.NoRecordSelectedTitle}
+                            </h3>
+                            <p class="slds-text-body_regular">
+                                {labels.NoRecordSelectedSubtitle}
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </lightning-card>
+        </div>
+    </div>
+</template>

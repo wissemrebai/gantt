@@ -1,0 +1,26 @@
+/* @sldsValidatorIgnore */
+.content-wrapper {
+    margin: -0.5rem;
+}
+
+.input-wrapper {
+    padding-top: 0.3rem;
+}
+
+.changed {
+    background: rgb(250, 255, 189) !important;
+}
+
+.actions-wrapper {
+    position: sticky;
+    bottom: -1rem;
+    z-index: 9001;
+    margin: -1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-record-form .lightning-record-form-cancel {
+    display: none;
+}

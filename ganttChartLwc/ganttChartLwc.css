@@ -1,0 +1,83 @@
+/* @sldsValidatorIgnore */
+:host {
+    --slds-c-card-radius-border: 1rem;
+    --slds-c-card-header-spacing-blockend: 1rem;
+}
+
+.card {
+    padding-block-start: var(--slds-c-card-spacing-blockstart, 0);
+    padding-inline-end: var(--slds-c-card-spacing-inlineend, 0);
+    padding-block-end: var(--slds-c-card-spacing-blockend, 0);
+    padding-inline-start: var(--slds-c-card-spacing-inlinestart, 0);
+    background: var(
+        --slds-c-card-color-background,
+        var(--slds-g-color-surface-container-1)
+    );
+    border-width: var(
+        --slds-c-card-sizing-border,
+        var(--slds-g-sizing-border-1)
+    );
+    border-style: solid;
+    border-color: var(
+        --slds-c-card-color-border,
+        var(--slds-s-container-color-border, var(--slds-g-color-border-1))
+    );
+    border-radius: var(
+        --slds-c-card-radius-border,
+        var(--slds-s-container-radius-border, var(--slds-g-radius-border-2))
+    );
+    background-clip: padding-box;
+    box-shadow: var(
+        --slds-c-card-shadow,
+        var(--slds-s-container-shadow, var(--slds-g-shadow-2))
+    );
+    color: var(--slds-c-card-text-color, var(--slds-s-container-color));
+    border: 1px solid var(--slds-g-color-neutral-base-70);
+}
+
+.gantt-split-view {
+    display: inline-block;
+    width: 100%;
+}
+
+.gantt-editor {
+    display: inline-block;
+    vertical-align: top;
+    border-width: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.split-editor {
+    background: #f8f8f8;
+}
+
+.gantt-new {
+    position: absolute;
+    z-index: 24;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #f8f8f8bf;
+    min-height: 300px;
+}
+
+.fullscreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(8, 7, 7, 0.6);
+    padding: 25px;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.fullscreen .card {
+    border-radius: 5px;
+}

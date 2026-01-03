@@ -1,0 +1,67 @@
+<template>
+    <div class="slds-grid">
+        <div class="left-side">
+            <slot name="leftSide"> </slot>
+        </div>
+
+        <div data-id="resizer" class="resizer">
+            <!-- With Split -->
+            <template lwc:if={withSplit}>
+                <span
+                    if:true={rightDirection}
+                    data-id="splitResize"
+                    class={splitResizeCls}
+                    onmousedown={handleMouseDown}
+                >
+                    <lightning-icon
+                        icon-name="utility:drag_and_drop"
+                        size="x-small"
+                    ></lightning-icon>
+                </span>
+
+                <span
+                    lwc:if={showToggle}
+                    data-id="splitClose"
+                    class={splitCloseCls}
+                    onclick={toggleSplitView}
+                >
+                    <lightning-icon
+                        icon-name={splitCloseIcon}
+                        size="x-small"
+                    ></lightning-icon>
+                </span>
+
+                <span
+                    if:false={rightDirection}
+                    data-id="splitResize"
+                    class={splitResizeCls}
+                    onmousedown={handleMouseDown}
+                >
+                    <lightning-icon
+                        icon-name="utility:drag_and_drop"
+                        size="x-small"
+                    ></lightning-icon>
+                </span>
+            </template>
+
+            <!-- Without Split -->
+            <template lwc:else>
+                <span
+                    lwc:if={showToggle}
+                    data-id="splitOpen"
+                    class={splitOpenCls}
+                    onclick={toggleSplitView}
+                >
+                    <lightning-icon
+                        icon-name={splitOpenIcon}
+                        size="x-small"
+                    ></lightning-icon>
+                </span>
+            </template>
+        </div>
+
+        <div class="right-side">
+            <slot name="rightSide"> </slot>
+        </div>
+    </div>
+</template>

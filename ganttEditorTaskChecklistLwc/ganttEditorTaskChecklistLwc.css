@@ -1,0 +1,144 @@
+:host {
+    display: block;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #f9f9f9;
+    margin: -10px;
+}
+
+.slds-p-around_medium.slds-border_bottom {
+    flex: 0 0 auto;
+    background: white;
+    z-index: 1;
+}
+
+.active-list-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 10px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.completed-area {
+    flex: 0 0 auto;
+    max-height: 40%;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid gainsboro;
+}
+
+.completed-area lightning-accordion {
+    overflow-y: auto;
+    background: #f4f4f4;
+}
+
+.checklist-item {
+    padding: 8px 10px;
+    transition: background 0.2s;
+}
+
+.checklist-item:hover,
+.checklist-item:focus-within {
+    background: white;
+    border-radius: 4px;
+}
+
+.title-editable {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3em;
+    font-family: inherit;
+
+    border: none;
+    background: transparent;
+    padding: 0;
+    outline: none;
+    resize: none;
+
+    min-height: 1.3em;
+    max-height: 3.9em;
+    overflow: hidden;
+
+    transition: max-height 0.2s ease-out;
+}
+
+.title-editable:focus {
+    max-height: 100vh;
+}
+
+.item-completed .title-editable {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.description-editable {
+    display: block;
+    width: 100%;
+    margin: 0;
+    color: #444;
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+    border: none;
+    background: transparent;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    transition: background 0.2s;
+
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.checklist-item:focus-within .description-editable,
+.description-editable:not(:placeholder-shown) {
+    height: auto;
+    min-height: 1.2rem;
+    max-height: 2.4rem;
+    opacity: 1;
+    padding: 0;
+    margin-top: 2px;
+    pointer-events: auto;
+    color: var(--slds-g-color-neutral-base-50);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.checklist-item .description-editable:focus {
+    display: block;
+    height: auto;
+    min-height: 80px;
+    max-height: 500px;
+    overflow-y: auto;
+
+    background-color: #f3f3f3;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    opacity: 1;
+}
+
+.action-buttons {
+    opacity: 0.3;
+    transition: opacity 0.2s;
+}
+
+.checklist-item:hover .action-buttons,
+.checklist-item:focus-within .action-buttons {
+    opacity: 1;
+}

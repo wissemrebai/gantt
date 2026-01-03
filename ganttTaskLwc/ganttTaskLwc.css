@@ -1,0 +1,837 @@
+/* @sldsValidatorIgnore */
+
+:host {
+    --gm-task-color: var(--slds-g-color-brand-base-30, #666666);
+    --gm-task-complete-color: var(--slds-g-color-brand-base-65, #666666);
+    --gm-task-wrap-opacity: 1;
+}
+
+/* ============================================================================
+   TASK ROW
+   ============================================================================ */
+
+.task-row {
+    height: var(--gm-task-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* ============================================================================
+   TASK GROUPER
+   ============================================================================ */
+
+.task-grouper {
+    position: absolute;
+    top: 50%;
+    width: var(--gm-task-width);
+    transform: var(--gm-task-left);
+    height: var(--gm-task-grouper-height);
+    border-width: 0 4px 4px 4px;
+    border-color: var(--sds-g-color-brand-base-10);
+    border-style: solid;
+    background: var(--sds-g-color-brand-base-60);
+    opacity: 0.3;
+    will-change: transform;
+}
+
+/* ============================================================================
+   SELECTED TASK
+   ============================================================================ */
+
+.selected .task {
+    color: #000;
+    background-color: var(--slds-g-color-success-base-70);
+}
+
+.selected .task .task-complete {
+    background-color: var(--slds-g-color-success-base-60);
+}
+
+/* ============================================================================
+   TASK WRAP - USES TRANSFORM FOR POSITIONING
+   ============================================================================ */
+
+.task-wrap {
+    margin-block: 0;
+    margin-inline: -25px;
+    padding-inline: 25px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    transform: var(--gm-task-left);
+    will-change: transform;
+}
+
+.task-wrap.task-dragging {
+    pointer-events: none;
+}
+
+.task-wrap:not(.task-invalid-dependency):hover .task-dot:not(.hidden) {
+    display: block;
+}
+
+.task-wrap:hover .progress_drag:not(.hidden),
+.progress_drag.active {
+    visibility: visible;
+}
+
+.task-wrap:hover .constraint-indicator {
+    display: none;
+}
+
+.milestone-wrap {
+    margin-block: 0;
+    margin-inline: -40px;
+}
+
+.milestone-wrap .task-critical-bar {
+    width: 12px;
+}
+
+/* ============================================================================
+   TASK COMPLETE PROGRESS BAR
+   ============================================================================ */
+
+.task-complete {
+    border-radius: 3px;
+    width: var(--gm-task-complete);
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+/* ============================================================================
+   TASK CONTENT
+   ============================================================================ */
+
+.task-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 100%;
+}
+
+/* ============================================================================
+   TASK - MAIN ELEMENT
+   ============================================================================ */
+
+.task {
+    z-index: 2;
+    width: var(--gm-task-width);
+    position: relative;
+    flex: 1 1 auto;
+    height: calc(var(--gm-task-height) * 0.5);
+    opacity: var(--gm-task-wrap-opacity);
+    will-change: width; /* Hint for width changes */
+}
+
+/* CONSTRAINT BORDERS - Already optimized with CSS variables */
+.task::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 4px;
+    background-color: var(--gm-constraint-left-color, transparent);
+    z-index: 2;
+}
+
+.task::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 4px;
+    background-color: var(--gm-constraint-right-color, transparent);
+    z-index: 2;
+}
+
+.task-active .task {
+    box-shadow: 0 0 0 2px #ff6358;
+}
+
+.task .task-complete {
+    background-color: var(--gm-task-complete-color);
+}
+
+/* ============================================================================
+   NEW TASK STYLING
+   ============================================================================ */
+
+.task.task-new {
+    background-color: var(--slds-g-color-success-base-70);
+    border: 1px dashed var(--slds-g-color-success-base-90);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task.task-new .task-complete {
+    background-color: color-mix(in srgb, #5e9e3e 60%, transparent);
+}
+
+.task.task-new:hover {
+    background-color: var(--slds-g-color-success-base-80);
+    border-style: solid;
+}
+
+.selected .task.task-new {
+    background-color: var(--slds-g-color-success-base-90);
+    border-color: var(--slds-g-color-success-base-100);
+}
+
+/* ============================================================================
+   OVERRUN INDICATORS
+   ============================================================================ */
+
+.task-single .task-row-overrun::before,
+.task-single .task-row-overrun::after {
+    display: block;
+}
+
+.task-wrap:hover .task-row-overrun::before {
+    width: 3px;
+    background-color: rgba(234, 0, 30, 0.7);
+}
+
+.task-wrap:hover .task-row-overrun::after {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.task-row-overrun::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--gm-deadline-left, 0);
+    width: 100%;
+    border-left: 2px solid rgba(180, 40, 40, 0.25);
+    pointer-events: none;
+}
+
+/* ============================================================================
+   ROW SEGMENTS
+   ============================================================================ */
+
+.row-segment {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.task-row-slide {
+    opacity: 1 !important;
+    /* OPTIMIZED: Slide uses transform in JS, not left */
+    will-change: transform;
+}
+
+/* ============================================================================
+   MILESTONE
+   ============================================================================ */
+
+.task-milestone {
+    width: 1em;
+    height: 1em;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    transform: rotate(45deg);
+}
+
+.task-milestone {
+    border-color: rgba(0, 0, 0, 0.08);
+    background-color: var(--gm-task-complete-color, #666666);
+}
+
+/* Counter-rotate children to prevent content rotation */
+.task-milestone .task-critical-bar,
+.task-milestone .task-complete,
+.task-milestone .task-content,
+.task-milestone .completion-tooltip {
+    transform: rotate(-45deg);
+}
+
+/* Constraint icons positioned absolutely - no rotation needed */
+.task-milestone .constraint-icon-start,
+.task-milestone .constraint-icon-end {
+    transform: none !important;
+}
+
+/* ============================================================================
+   SUMMARY TASK
+   ============================================================================ */
+
+.task-summary {
+    color: #f5f5f5;
+    background-color: var(--sds-g-color-brand-base-70);
+    display: inline-block;
+    height: calc(var(--gm-task-height) * 0.2);
+    vertical-align: top;
+    border-radius: 5px;
+}
+
+.task-summary .task-complete {
+    background-color: var(--sds-g-color-brand-base-40);
+}
+
+/* Bottom rounded caps for expanded summary */
+.task-summary-expanded::before,
+.task-summary-expanded::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 6px;
+    height: 200%;
+    background-color: var(--sds-g-color-brand-base-70);
+    border-radius: 2px;
+}
+
+.task-summary-expanded::before {
+    left: 0;
+}
+
+.task-summary-expanded::after {
+    right: 0;
+}
+
+/* ============================================================================
+   SINGLE TASK
+   ============================================================================ */
+
+.task-single {
+    border-radius: 0.25rem;
+    border-width: 0px;
+    border-style: solid;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+.task-single .resize-handle {
+    z-index: 2;
+    visibility: hidden;
+}
+
+.task-single .resize-left {
+    left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.task-single .resize-left:before {
+    left: 0px;
+}
+
+.task-single .resize-right {
+    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.task-single .resize-right:before {
+    right: 0px;
+}
+
+.task-single:hover .resize-handle {
+    visibility: visible;
+}
+
+/* ============================================================================
+   TASK TITLE
+   ============================================================================ */
+
+.task-template {
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    line-height: normal;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-title-outside {
+    position: absolute;
+    /* OPTIMIZED: Uses transform for positioning */
+    left: 0;
+    transform: translateX(calc(var(--gm-task-width) + 25px)) translateY(-50%);
+    top: 50%;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--lwc-colorTextDefault, #444);
+    transition: transform 0.2s ease-out; /* Smooth animation */
+    pointer-events: none;
+    will-change: transform; /* GPU acceleration */
+}
+
+.task-milestone .task-title-outside {
+    transform: translateX(calc(var(--gm-task-width) + 40px)) translateY(-50%);
+}
+
+.task-wrap:hover .task-title-outside {
+    /* OPTIMIZED: Additional transform on hover */
+    transform: translateX(calc(var(--gm-task-width) + 35px)) translateY(-50%);
+}
+
+/* ============================================================================
+   TASK SINGLE (CLASSIC TASK)
+   ============================================================================ */
+
+.task-single {
+    color: #f5f5f5;
+    background-color: color-mix(
+        in srgb,
+        var(--gm-task-complete-color) 60%,
+        #ffffff
+    );
+    border-radius: 3px;
+    border-width: 0px;
+    border-style: solid;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* ============================================================================
+   TASK DOT (DEPENDENCY CONNECTORS)
+   ============================================================================ */
+
+.task-dot {
+    width: calc(10px + 0.25rem * 2);
+    height: calc(10px + 0.25rem * 2);
+    line-height: 1;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 50%;
+    /* OPTIMIZED: Uses transform for centering */
+    transform: translateY(-50%);
+    z-index: 4;
+    transition: transform 0.1s ease; /* Smooth scale on hover */
+    will-change: transform;
+}
+
+.task-dot:before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-width: 0;
+    border-style: solid;
+    border-radius: 4px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease; /* Smooth transition */
+}
+
+.task-dot:hover:before,
+.task-dot.hover:before {
+    border-width: 1px;
+    /* OPTIMIZED: Scale instead of size change */
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.task-dot:before {
+    background-color: #424242;
+}
+
+.task-dot:hover:before,
+.task-dot.hover:before {
+    border-color: #424242;
+    background-color: #ffffff;
+}
+
+/* ============================================================================
+   PROGRESS DRAG INDICATOR
+   ============================================================================ */
+
+.progress_drag {
+    position: absolute;
+    cursor: ew-resize;
+    z-index: 10;
+    top: 100%;
+    border: 5px solid transparent;
+    border-width: 0px 9px 0px 9px;
+    border-style: solid;
+    border-bottom: 9px solid #484848;
+    margin-top: -1px;
+    margin-left: -9px;
+    visibility: hidden;
+    transform: var(--gm-task-progress);
+    will-change: transform;
+
+    display: flex;
+    justify-content: center;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: black;
+    background-color: rgb(255 255 255 / 55%);
+    padding: 2px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 5;
+    visibility: hidden;
+}
+.task-wrap:hover .progress-text,
+
+.task-wrap:hover .progress_drag,
+.progress_drag.active ~ .progress-text {
+    visibility: visible;
+}
+
+/* ============================================================================
+   RESIZE HANDLES
+   ============================================================================ */
+
+.resize-handle {
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    background: #ffffff;
+    height: 70%;
+    width: 6px;
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 1px var(--sds-g-color-brand-base-20);
+    transition: transform 0.1s ease; /* Smooth scale */
+    will-change: transform;
+}
+
+.resize-left {
+    transform: translateX(-50%);
+    cursor: w-resize;
+}
+
+.resize-right {
+    transform: translateX(50%);
+    cursor: e-resize;
+}
+
+.resize-handle:hover {
+    /* OPTIMIZED: Scale on hover */
+    transform: translateX(-50%) scale(1.2);
+}
+
+.resize-right:hover {
+    transform: translateX(50%) scale(1.2);
+}
+
+.resize-handle::before {
+    content: '\2807';
+    color: var(--sds-g-color-brand-base-20);
+}
+
+/* ============================================================================
+   CRITICAL PATH
+   ============================================================================ */
+
+.task-critical-bar {
+    position: absolute;
+    border-radius: 3px;
+    margin: -2px;
+    outline: 3px solid var(--slds-g-color-error-base-50);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+}
+
+/* ============================================================================
+   CONSTRAINTS - OPTIMIZED WITH TRANSFORMS
+   ============================================================================ */
+
+.constraint-icon-start {
+    position: absolute;
+    /* OPTIMIZED: Uses transform for positioning */
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    animation: constraint-pulse 2s ease-in-out infinite;
+    will-change: transform, filter; /* GPU acceleration */
+}
+
+.constraint-icon-end {
+    position: absolute;
+    /* OPTIMIZED: Uses transform for positioning */
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    animation: constraint-pulse 2s ease-in-out infinite;
+    will-change: transform, filter; /* GPU acceleration */
+}
+
+/* OPTIMIZED: Animation uses transform and filter only */
+@keyframes constraint-pulse {
+    0% {
+        filter: drop-shadow(0 0 0px rgba(220, 53, 69, 0.6));
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.8));
+        transform: translateY(-50%) scale(1.1);
+    }
+    100% {
+        filter: drop-shadow(0 0 0px rgba(220, 53, 69, 0.6));
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.task-wrap:hover .constraint-icon-start,
+.task-wrap:hover .constraint-icon-end {
+    filter: drop-shadow(0 0 12px rgba(220, 53, 69, 1));
+    animation: constraint-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes constraint-glow {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.8));
+    }
+    50% {
+        filter: drop-shadow(0 0 16px rgba(220, 53, 69, 1));
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.8));
+    }
+}
+
+/* ============================================================================
+   DEADLINES
+   ============================================================================ */
+
+.zone-target-start {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--gm-target-start-pct, 0%);
+    pointer-events: none;
+}
+
+.zone-target-end {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: var(--gm-target-end-pct, 100%);
+    right: 0;
+    pointer-events: none;
+}
+
+.task-texture-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent 6px,
+        transparent 12px,
+        rgba(234, 0, 30, 0.25) 10px,
+        rgba(234, 0, 30, 0.25) 19px
+    );
+    pointer-events: none;
+    z-index: 6;
+}
+
+.task-texture-start {
+    left: 0;
+    right: calc(100% - var(--gm-target-start-width, 0px));
+}
+
+.task-texture-end {
+    left: var(--gm-target-end-width, 100%);
+    right: 0;
+}
+
+.zone-bracket {
+    position: absolute;
+    height: 100%;
+    width: 16px;
+    pointer-events: none;
+}
+
+.zone-bracket-start {
+    right: -2px;
+}
+
+.zone-bracket-end {
+    left: -2px;
+}
+
+.bracket-line {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    border-radius: 1px;
+    transition: all 0.2s ease; /* Smooth transition */
+}
+
+.zone-bracket-start .bracket-line {
+    background-color: #04844b;
+    right: -10px;
+}
+
+.zone-bracket-end .bracket-line {
+    background-color: #c23934;
+    left: -10px;
+}
+
+.bracket-top {
+    top: 0;
+}
+
+.bracket-bottom {
+    bottom: 0;
+}
+
+.bracket-edge {
+    position: absolute;
+    width: 4px;
+    top: 0;
+    bottom: 0;
+    border-radius: 1px;
+    transition: all 0.2s ease; /* Smooth transition */
+}
+
+.zone-bracket-start .bracket-edge {
+    background-color: #04844b;
+    right: 0;
+}
+
+.zone-bracket-end .bracket-edge {
+    background-color: #c23934;
+    left: 0;
+}
+
+.task-row:hover .zone-bracket .bracket-line,
+.task-row:hover .zone-bracket .bracket-edge {
+    height: 4px;
+    width: 4px;
+}
+
+.task-row:hover .zone-bracket-start .bracket-line {
+    width: 14px;
+}
+
+.task-row:hover .zone-bracket-end .bracket-line {
+    width: 14px;
+}
+
+/* ============================================================================
+   SEGMENTS
+   ============================================================================ */
+
+.task-segment-indicator {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    background-color: rgba(255, 159, 67, 0.4);
+    border: 1px solid rgba(255, 159, 67, 0.8);
+    border-radius: 2px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ============================================================================
+   BASELINE
+   ============================================================================ */
+
+.baseline-indicator {
+    position: absolute;
+    z-index: 0;
+    margin-bottom: 12px;
+    background-color: var(--sds-g-color-neutral-base-50);
+    transition: background-color 0.2s ease; /* Smooth color transition */
+}
+
+.baseline-indicator.task-milestone {
+    margin-inline: -8px;
+}
+
+.task-wrap:hover .baseline-indicator {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.task-wrap:hover .baseline-indicator::before {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 3px;
+}
+
+.task-wrap:hover .baseline-indicator::after {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 8px;
+    height: 8px;
+    left: -4px;
+}
+
+.task-wrap:hover .baseline-indicator {
+    background-image: radial-gradient(
+        circle at calc(100% + 4px) 50%,
+        rgba(0, 0, 0, 0.7) 4px,
+        rgba(0, 0, 0, 0.7) 4px,
+        rgba(0, 0, 0, 0.7) 5px,
+        transparent 5px
+    );
+}
+
+/* ============================================================================
+   BASELINE TOOLTIP
+   ============================================================================ */
+
+.baseline-tooltip-fixed {
+    position: absolute;
+    background-color: var(--slds-g-color-neutral-base-20);
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.baseline-tooltip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.baseline-tooltip-label {
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.baseline-tooltip-date {
+    font-size: 11px;
+    color: #e0e0e0;
+}
